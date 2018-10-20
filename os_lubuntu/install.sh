@@ -128,7 +128,7 @@ whiptail --title "installer.sh for lubuntu" --checklist --separate-output \
     "dev-php" "php, composer" ON \
     "dev-python3" "python3, pip" ON \
     "dev-go" "go" ON \
-    "dev-base" "dotfiles, vim, curl, pandoc  " ON \
+    "dev-base" "pandoc  " ON \
     2>arquivoResultadosWhiptail
 
 # teste para ver se o arquivo está vazio
