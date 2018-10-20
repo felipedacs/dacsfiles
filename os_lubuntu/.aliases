@@ -8,6 +8,7 @@ alias cgo='cd ~/go/src/github.com/felipedacs'
 alias cdo='cd ~/dev/dotfiles ; l'
 
 # GIT
+alias ga="git add ."
 alias gpm='git push origin master'
 
 # LS

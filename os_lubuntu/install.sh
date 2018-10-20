@@ -4,16 +4,24 @@
 #./install.sh
 
 rotinaBase (){
-    echo "rotina base"
+    echo "=======================================================rotina base"
 
     #-----------------------
     #wget
     sudo apt install -y wget
 
     #-----------------------
+    #curl
+    sudo apt-get installl -y curl
+
+    #-----------------------
+    #vim
+    sudo apt-get installl -y vim
+
+    #-----------------------
     #scrot
-    sudo apt-get install scrot
-    sudo apt-get install synapse
+    sudo apt-get install -y scrot
+    sudo apt-get install -y synapse
 
     #-----------------------
     #theme
@@ -50,10 +58,13 @@ rotinaBase (){
     #lubunturc
     ln -v -s -f $(pwd)/.config/openbox/lubuntu-rc.xml ~/.config/openbox/lubuntu-rc.xml
 
+    #wallpaper
+    pcmanfm --set-wallpaper="$HOME/dev/dotfiles/dw.jpg"
+
 }
 
 rotinaJava(){
-    echo "rotina java"
+    echo "=======================================================rotina java"
 
     #-----------------------
     # jdk
@@ -62,7 +73,7 @@ rotinaJava(){
 }
 
 rotinaNode (){
-    echo "rotina node"
+    echo "=======================================================rotina node"
 
     #-----------------------
     #node
@@ -70,7 +81,7 @@ rotinaNode (){
 }
 
 rotinaPHP (){
-    echo "rotina php"
+    echo "=======================================================rotina php"
 
     #-----------------------
     #php
@@ -83,7 +94,7 @@ rotinaPHP (){
 }
 
 rotinaPython3 (){
-    echo "rotina python"
+    echo "=======================================================rotina python"
 
     #-----------------------
     #python3
@@ -91,7 +102,7 @@ rotinaPython3 (){
 }
 
 rotinaGo (){
-    echo "rotina go"
+    echo "=======================================================rotina go"
 
     #-----------------------
     # go
@@ -100,26 +111,17 @@ rotinaGo (){
 }
 
 rotinaDevBase (){
-    echo "rotina dev base"
-
-    #-----------------------
-    #vimo
-    sudo apt-get installl -y vim
-
-    #-----------------------
-    #curl
-    sudo apt-get installl -y curl
+    echo "=======================================================rotina dev base"
 
     #-----------------------
     #pandoc
     sudo apt-get install -y pandoc
-
 }
 
 
 
 whiptail --title "installer.sh for lubuntu" --checklist --separate-output \
-    "↓, ↑, <space>, <tab> and <enter> to confirm\nSerão instalados: git, scrot, synapse, tema, dotfiles"\
+    "↓, ↑, <space>, <tab> and <enter> to confirm\nSerão instalados: wget, curl, vim, scrot, synapse, tema, dotfiles"\
     20 80 12 \
     "dev-java" "jdk" OFF \
     "dev-node" "node, npm" ON \
@@ -129,25 +131,37 @@ whiptail --title "installer.sh for lubuntu" --checklist --separate-output \
     "dev-base" "dotfiles, vim, curl, pandoc  " ON \
     2>arquivoResultadosWhiptail
 
-rotinaBase
-while read choice
-do
-    case $choice in
-        dev-java) rotinaJava
-            ;;
-        dev-node) rotinaNode
-            ;;
-        dev-php) rotinaPHP
-            ;;
-        dev-python3) rotinaPython3
-            ;;
-        dev-go) rotinaGo
-            ;;
-        dev-base) rotinaDevBase
-            ;;
-    esac
-    sudo -E apt-get update
-done < arquivoResultadosWhiptail
+# teste para ver se o arquivo está vazio
+if [ -s arquivoResultadosWhiptail ]
+then
+    echo "=======================================================INICIO"
+
+    # rotina da base de instalação
+    rotinaBase
+
+    # ler e executar rotinas escolhidas
+    while read choice
+    do
+        case $choice in
+            dev-java) rotinaJava
+                ;;
+            dev-node) rotinaNode
+                ;;
+            dev-php) rotinaPHP
+                ;;
+            dev-python3) rotinaPython3
+                ;;
+            dev-go) rotinaGo
+                ;;
+            dev-base) rotinaDevBase
+                ;;
+        esac
+        sudo -E apt-get update
+    done < arquivoResultadosWhiptail
+else
+    echo "=======================================================CANCELADO"
+fi
+
 
 # referencias: 
 # Filipe Deschamps: https://github.com/filipedeschamps/dotfiles

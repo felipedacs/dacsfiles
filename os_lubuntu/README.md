@@ -1,0 +1,5 @@
+# tips
+
+```bash
+xrandr --auto
+```
