@@ -1,0 +1,24 @@
+# Aliases
+# =====================
+# CD
+alias cphp='cd ~/dev/php'
+alias cpy='cd ~/dev/python'
+alias cfront='cd ~/dev/front/'
+alias cgo='cd ~/go/src/github.com/felipedacs'
+alias cdo='cd ~/dev/dotfiles ; l'
+
+# GIT
+alias gpm='git push origin master'
+
+# LS
+alias ll='ls -alF'
+alias l='ls -XF --color'
+# Scrot
+alias sct='scrot -s -d 5 -c ~/Imagens/prints/scrot::%Y-%m-%d::%H%M%S.jpg'
+
+# etc
+alias pc='pcmanfm'
+alias v='vim'
+
+# sites
+alias yt="xdg-open 'https://youtube.com'"

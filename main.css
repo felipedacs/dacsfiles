@@ -1,0 +1,28 @@
+body{
+    padding: 1em 5em;
+    color: #8BE9FD;
+    background-color: #3C4556;
+}
+pre{
+    color: #FFB86C;
+    background-color:#252525;
+    border-radius:7px;
+    margin: 2em 0;
+    padding: 1em;
+}
+#tacopy{
+    visibility: hidden;
+}
+#btn-lubuntu{
+    background-color:#BD93F9;
+    color:#3C4556;
+    border:0;
+    padding: 1em;
+    border-radius: 3px;
+}
+.btn-active{
+    background-color:#50FA7B !important;
+}
+a{
+    color: white;
+}
