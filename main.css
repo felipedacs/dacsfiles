@@ -11,18 +11,30 @@ pre{
     padding: 1em;
 }
 #tacopy{
-    visibility: hidden;
+    heigth: 1px;
+    width: 1px;
+    position: -1;
 }
-#btn-lubuntu{
+
+.oculto {
+    position: absolute;
+    top: -9999px;
+}
+
+.btn-copy{
     background-color:#BD93F9;
     color:#3C4556;
     border:0;
     padding: 1em;
     border-radius: 3px;
+    transition: 1.5s;
 }
+
 .btn-active{
     background-color:#50FA7B !important;
+    transition: 1.5s;
 }
+
 a{
     color: white;
 }
