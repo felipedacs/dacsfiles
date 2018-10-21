@@ -131,7 +131,7 @@ rotinaDevBase (){
 
 
 whiptail --title "installer.sh for lubuntu" --checklist --separate-output \
-    "↓, ↑, <space>, <tab> and <enter> to confirm\nSerão instalados: wget, curl, vim, scrot, synapse, tema, dotfiles"\
+    "↓, ↑, <space>, <tab> and <enter> to confirm\nSerão instalados: wget, curl, vim, atom, scrot, synapse, tema, dotfiles"\
     20 80 12 \
     "dev-java" "jdk" OFF \
     "dev-node" "node, npm" ON \
