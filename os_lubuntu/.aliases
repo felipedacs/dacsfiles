@@ -6,6 +6,9 @@ alias cpy='cd ~/dev/python'
 alias cfront='cd ~/dev/front/'
 alias cgo='cd ~/go/src/github.com/felipedacs'
 alias cdo='cd ~/dev/dotfiles ; l'
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
 
 # GIT
 alias ga="git add ."

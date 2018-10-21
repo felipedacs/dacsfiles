@@ -49,13 +49,17 @@ rotinaBase (){
     ln -v -s -f $(pwd)/.vimrc.local.bundles ~/.vimrc.local.bundles
     ln -v -s -f $(pwd)/.vim/UltiSnips ~/.vim/UltiSnips
 
-    if [ -d "/home/neni/.vim/doc" ]; then
+    if [ -d "$HOME/.vim/doc" ]; then
         echo "=======================================================apagando doc existente"
         rm -r ~/.vim/doc
     fi
     ln -v -s -f $(pwd)/.vim/doc ~/.vim/doc
 
     #lubunturc
+    if [ -f "$HOME/.config/openbox/lubuntu-rc.xml" ]; then
+        echo "=======================================================apagando doc existente"
+        rm -r ~/.config/openbox/lubuntu-rc.xml
+    fi
     ln -v -s -f $(pwd)/.config/openbox/lubuntu-rc.xml ~/.config/openbox/lubuntu-rc.xml
 
     #wallpaper
