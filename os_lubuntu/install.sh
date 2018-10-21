@@ -19,6 +19,12 @@ rotinaBase (){
     sudo apt-get installl -y vim
 
     #-----------------------
+    #atom
+    sudo add-apt-repository -y ppa:webupd8team/atom
+    sudo apt-get update
+    sudo apt-get install -y atom
+
+    #-----------------------
     #scrot
     sudo apt-get install -y scrot
     sudo apt-get install -y synapse
