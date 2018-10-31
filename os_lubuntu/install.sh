@@ -3,6 +3,11 @@
 #chmod +x install.sh
 #./install.sh
 
+
+MACHINE_TYPE=`uname -m`
+
+
+
 rotinaBase (){
     echo "=======================================================rotina base"
 
@@ -126,19 +131,81 @@ rotinaDevBase (){
     #-----------------------
     #pandoc
     sudo apt-get install -y pandoc
+
+    #-----------------------
+    #postman
+    # dicas postman: http://agiletesters.com.br/topic/1270/automatizando-testes-de-apis-rest-com-postman-e-newman
+    #https://matheuslima.com.br/como-instalar-o-postman-no-ubuntu
+    if [ ${MACHINE_TYPE} == 'x86_64' ]; then
+        # 64-bit stuff here
+        wget https://dl.pstmn.io/download/latest/linux64 -O postman.tar.gz
+    else
+        # 32-bit stuff here
+        wget https://dl.pstmn.io/download/latest/linux32 -O postman.tar.gz
+    fi
+    sudo tar -xzf postman.tar.gz -C /opt
+    rm postman.tar.gz
+    sudo ln -s /opt/Postman/Postman /usr/bin/postman
+
+    #-----------------------
+    #umbrello
+    sudo apt-get install umbrello
 }
 
+rotinaUserExtra (){
+    echo "=======================================================rotina usuario extra"
+
+    #-----------------------
+    #discord
+    #https://www.edivaldobrito.com.br/discord-no-ubuntu-debian-mint/
+    wget "https://discordapp.com/api/download?platform=linux&format=deb" -O discord.deb
+    sudo dpkg -i discord.deb
+    sudo apt-get install -f
+
+    #-----------------------
+    #telegram
+    #https://www.edivaldobrito.com.br/como-instalar-o-cliente-oficial-telegram-no-linux-manualmente/
+    if [ ${MACHINE_TYPE} == 'x86_64' ]; then
+        # 64-bit stuff here
+        wget "https://telegram.org/dl/desktop/linux32" -O telegram.tar.xz
+    else
+        # 32-bit stuff here
+        wget "https://telegram.org/dl/desktop/linux" -O telegram.tar.xz
+    fi
+    sudo tar Jxf telegram.tar.xz -C /opt/
+    sudo mv /opt/Telegram*/ /opt/telegram
+    sudo ln -sf /opt/telegram/Telegram /usr/bin/telegram
+
+    #-----------------------
+    #calibre
+    #https://www.edivaldobrito.com.br/instalar-o-calibre-no-linux/
+    sudo -v && wget -nv -O- https://raw.githubusercontent.com/kovidgoyal/calibre/master/setup/linux-installer.py | sudo python -c "import sys; main=lambda:sys.stderr.write('Download failed\n'); exec(sys.stdin.read()); main()"
+
+    #-----------------------
+    #inkscape
+    sudo add-apt-repository ppa:inkscape.dev/stable
+    sudo apt-get update
+    sudo apt-get install inkscape
+
+    #-----------------------
+    #gimp
+    sudo add-apt-repository ppa:otto-kesselgulasch/gimp
+    sudo apt-get update
+    sudo apt-get install gimp gimp-gmic gmic
+    sudo apt-get install gimp-plugin-registry
+}
 
 
 whiptail --title "installer.sh for lubuntu" --checklist --separate-output \
     "↓, ↑, <space>, <tab> and <enter> to confirm\nSerão instalados: wget, curl, vim, atom, scrot, synapse, tema, dotfiles"\
-    20 80 12 \
+    20 90 12 \
+    "user-extra" "discord, telegram, calibre, inkscape, gimp" OFF \
     "dev-java" "jdk" OFF \
     "dev-node" "node, npm" ON \
     "dev-php" "php, composer" ON \
     "dev-python3" "python3, pip" ON \
     "dev-go" "go" ON \
-    "dev-base" "pandoc  " ON \
+    "dev-base" "pandoc, postman" ON \
     2>arquivoResultadosWhiptail
 
 # teste para ver se o arquivo está vazio
@@ -153,6 +220,8 @@ then
     while read choice
     do
         case $choice in
+            user-extra) rotinaUserExtra
+                ;;
             dev-java) rotinaJava
                 ;;
             dev-node) rotinaNode
