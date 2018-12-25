@@ -1,28 +1,99 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>dacsfiles</title>
-        <link href="main.css" rel="stylesheet" type="text/css">
-    </head>
-    <body>
-        <h1>dacsfiles</h1>
-        <span>Tema de cores: <a href="https://draculatheme.com" target="blank">dracula</a></span>
-        <div class="div-snippet">
-            <pre id="pre-lubuntu">
-            <code id="code-lubuntu">
-#instalar git
-sudo apt-get install -y git
-#git clone
-git clone https://github.com/felipedacs/dotfiles.git ~/dev/dotfiles
-#instalar
-chmod +x ~/dev/dotfiles/os_lubuntu/install.sh
-~/dev/dotfiles/os_lubuntu/install.sh
-            </code>
-            </pre>
-            <input type="button" value="copy" id="btn-lubuntu" class="btn-copy">
-            <textarea id="tacopy" class="oculto">
-            </textarea>
-        </div>
-        <script src="main.js"></script>
-    </body>
+<head>
+  <title>dacsfiles</title>
+  <style media="screen">
+  body{
+    padding: 1em 5em;
+    color: #8BE9FD;
+    background-color: #3C4556;
+  }
+  pre{
+    color: #FFB86C;
+    background-color:#252525;
+    border-radius:7px;
+    margin: 2em 0;
+    padding: 1em;
+  }
+  #tacopy{
+    heigth: 1px;
+    width: 1px;
+    position: -1;
+  }
+
+  .oculto {
+    position: absolute;
+    top: -9999px;
+  }
+
+  .btn-copy{
+    background-color:#BD93F9;
+    color:#3C4556;
+    border:0;
+    padding: 1em;
+    border-radius: 3px;
+    transition: 1.5s;
+  }
+
+  .btn-active{
+    background-color:#50FA7B !important;
+    transition: 1.5s;
+  }
+
+  a{
+    color: white;
+  }
+  </style>
+</head>
+<body>
+  <h1>dacsfiles</h1>
+  <span>Tema de cores: <a href="https://draculatheme.com" target="blank">dracula</a></span>
+  <div class="div-snippet">
+    <pre id="pre-lubuntu">
+      <code id="code-lubuntu">
+        #instalar git
+        sudo apt-get install -y git
+        #git clone
+        git clone https://github.com/felipedacs/dotfiles.git ~/dev/dotfiles
+        #instalar
+        chmod +x ~/dev/dotfiles/os_lubuntu/install.sh
+        ~/dev/dotfiles/os_lubuntu/install.sh
+      </code>
+    </pre>
+    <input type="button" value="copy" id="btn-lubuntu" class="btn-copy">
+    <textarea id="tacopy" class="oculto">
+    </textarea>
+  </div>
+  <script type="text/javascript">
+  var btnLubuntu = document.getElementById("btn-lubuntu");
+
+  btnLubuntu.addEventListener("click", function(){
+    // estilização do btn
+    btnLubuntu.classList.add('btn-active');
+    btnLubuntu.value = "copied";
+
+    // pega texto e transfere para textarea
+    let code = document.getElementById("code-lubuntu").innerHTML;
+    let textarea = document.getElementById("tacopy");
+    textarea.innerHTML = code;
+    //let textarea = document.getElementById("tacopy");
+
+    // envia objeto para ser copiado
+    clipBoard(textarea)
+
+    // desfaz estilização
+    setTimeout(function(){
+      btnLubuntu.classList.remove('btn-active');
+      btnLubuntu.value = "again?";
+    }, 3000);
+
+  });
+
+  function clipBoard(textarea) {
+    console.log(textarea) ;
+    textarea.select();
+    document.execCommand("copy");
+  }
+  </script>
+</body>
 </html>
