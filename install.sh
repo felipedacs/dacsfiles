@@ -60,7 +60,7 @@ source $HOME/dev/dotfiles/$DISTRO/$INTERFACE_GRAFICA/install.sh
 # ------------------------- FUNÇÕES ------------------------ #
 linkandoDotfiles(){
     git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-    ~/.fzf/install
+    ~/.fzf/install -y
     ln -v -s -f $(pwd)/dotfiles/.fzf.bash $HOME/.fzf.bash
 
     ln -v -s -f $(pwd)/dotfiles/.bashrc $HOME/.bashrc
@@ -73,7 +73,7 @@ linkandoDotfiles(){
     ln -v -s -f $(pwd)/dotfiles/.scripts $HOME/.scripts
 
     ln -v -s -f $(pwd)/dotfiles/.vimrc $HOME/.vimrc
-    ln -v -s -f $(pwd)/.vim/UltiSnips $HOME/.vim/UltiSnips
+    ln -v -s -f $(pwd)/.vim/dacs-snippets $HOME/.vim
 
     # existe a pasta doc?
     [ -d "$HOME/.vim/doc" ] && rm -r $HOME/.vim/doc

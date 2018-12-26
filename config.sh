@@ -62,11 +62,11 @@ BG_WHITE='\e[107m'
 # parametros em shell:
 # https://www.vivaolinux.com.br/topico/Shell-Script/Passando-parametros-entre-funcoes
 informaErro (){
-    printf "${BG_PURPLE}${WHITE}!!!!!!!!!!!!!!!!!!!!!! $1${BG_NC}${NC}\n"
+    printf "${BG_RED}${WHITE}!!!!!!!!!!!!!!!!!!!!!! $1${BG_NC}${NC}\n"
 }
 
 informaAcao (){
-    printf "${BG_RED}${WHITE}______________________ $1${BG_NC}${NC}\n"
+    printf "${BG_PURPLE}${WHITE}______________________ $1${BG_NC}${NC}\n"
 }
 
 informaCenario (){

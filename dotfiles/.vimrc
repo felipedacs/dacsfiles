@@ -325,6 +325,7 @@ let g:UltiSnipsJumpBackwardTrigger="<c-b>"
 let g:UltiSnipsEditSplit="vertical"
 let g:UltiSnipsSnippetDirectories=[$HOME.'/.vim/UltiSnips']
 let g:UltiSnipsSnippetsDir="~/.vim/UltiSnips"
+let g:tex_flavor='latex'
 
 "" trigger com enter quano possível
 "" https://github.com/Valloric/YouCompleteMe/issues/420
