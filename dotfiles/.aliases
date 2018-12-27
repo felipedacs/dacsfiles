@@ -12,7 +12,9 @@ alias ....='cd ../../..'
 
 # GIT
 alias ga="git add ."
-alias gpm='git push origin master'
+alias gc="git commit"
+alias gps='git push origin master'
+alias gs='git status'
 
 # LS
 alias ll='ls -alF'

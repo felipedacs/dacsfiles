@@ -34,7 +34,7 @@ instalaTemas(){
 }
 
 instalaDiversos(){
-    sudo apt-get install -y synapse
+    echo "..."
 }
 # ---------------------------------------------------------- #
 

@@ -159,7 +159,6 @@ set wildmenu
 "procura por arquivos com plug fzf
 nnoremap <c-n> :tabe 
 
-
 "acabar com o ctrl z
 nnoremap <C-Z> u
 nnoremap <c-z> u
@@ -277,6 +276,18 @@ nnoremap <leader>gc <Esc>:w<CR>:!clear;gcc % -o executavel ; ./executavel ; rm e
 "*****************************************************************************
 "" Plugins config
 "*****************************************************************************
+
+"" Git 
+noremap <Leader>gw :Gwrite<CR>
+noremap <Leader>ga :Git add .<CR><CR>:echo "git add ."<CR>
+noremap <Leader>gc :Gcommit<CR>
+noremap <Leader>gsh :Gpush<CR>
+noremap <Leader>gll :Gpull<CR>
+noremap <Leader>gs :Gstatus<CR>
+noremap <Leader>gb :Gblame<CR>
+noremap <Leader>gd :Gvdiff<CR>
+noremap <Leader>gr :Gremove<CR>
+
 "######################################################
 "# Tagbar
 "######################################################

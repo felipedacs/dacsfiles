@@ -12,9 +12,9 @@ function mk (){
 
 # GIT
 # USE: gc mensagem
-function gc (){
-    git commit -m "$1"
-}
+#function gc (){
+#    git commit -m "$1"
+#}
 
 # USE: extract imazip.zip
 function extract () {

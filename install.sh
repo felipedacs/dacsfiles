@@ -47,7 +47,7 @@
 # ------------------------- IMPORT ------------------------- #
 source ./config.sh
 source $HOME/dev/dotfiles/$DISTRO/install.sh
-source $HOME/dev/dotfiles/$DISTRO/$INTERFACE_GRAFICA/install.sh
+#source $HOME/dev/dotfiles/$DISTRO/$INTERFACE_GRAFICA/install.sh
 # ---------------------------------------------------------- #
 
 # ------------------------ VARIÁVEIS ----------------------- #
@@ -107,6 +107,7 @@ cenarioBase (){
         linkandoDotfiles
 
         configuraInterfaceGrafica
+        instalaDiversosInterfaceGrafica
 
         instalaDiversos
     fi
