@@ -4,10 +4,10 @@
 # Autor/Mantenedor: Felipe Silva - github.com/felipedacs
 # ---------------------------------------------------------- #
 # Esse sript define variáveis e funções comuns ao instalador
-# principal em $HOME/dev/dotfiles e aos seus sub-instaladores 
+# principal em $HOME/dev/dotfiles e aos seus sub-instaladores
 # em $HOME/dev/dotfiles/$DISTRO e
 # $HOME/dev/dotfiles/$DISTRO/$INTERFACE_GRAFICA
-# 
+#
 # Utilização:
 #   Ver em $HOME/dev/dotfiles/install.sh
 # ---------------------------------------------------------- #
@@ -74,6 +74,6 @@ informaCenario (){
 }
 
 informaAcaoCenario (){
-    printf "${BG_CYAN}${WHITE}---------------------- INSTALANDO $1${BG_NC}${NC}\n"
+    printf "${BG_CYAN}${WHITE}---------------------- $1${BG_NC}${NC}\n"
 }
 # ---------------------------------------------------------- #

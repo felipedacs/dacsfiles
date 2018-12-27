@@ -23,7 +23,7 @@ alias l='ls -XF --color'
 alias sct='scrot -s -d 5 -c ~/Imagens/prints/scrot::%Y-%m-%d::%H%M%S.jpg'
 
 # etc
-alias pc='pcmanfm'
+#alias pc='pcmanfm'
 alias v='vim'
 
 # sites
