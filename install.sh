@@ -35,6 +35,7 @@
 #   https://github.com/gbencke
 #
 # A todos que disponibilizaram seus dotfiles online:
+#   Luke Smith: https://github.com/LukeSmithxyz/voidrice
 #   Filipe Deschamps: https://github.com/filipedeschamps/dotfiles
 #   gbencke: https://github.com/gbencke/dotfiles
 #   Denys Dovhan: https://github.com/denysdovhan/dotfiles
@@ -98,9 +99,6 @@ cenarioBase (){
 
         informaAcaoCenario "INSTALANDO SCROT"
         instalaScrot
-
-        informaAcaoCenario "INSTALANDO SYNAPSE"
-        instalaSynapse
 
         informaAcaoCenario "INSTALANDO TEMAS"
         instalaTemas
@@ -197,7 +195,7 @@ cenarioUserExtra(){
 # ---------------------------------------------------------- #
 
 # -------------------------- MAIN -------------------------- #
-sudo apt-get install whiptail
+instalaWhiptail
 
 [ "$1" = "-t" ] && TEST_MODE=true
 

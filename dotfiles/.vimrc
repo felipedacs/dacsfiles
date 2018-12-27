@@ -36,8 +36,8 @@ call plug#begin(expand('~/.vim/plugged'))
 Plug 'majutsushi/tagbar'                                            " Barra lateral com variáveis, funçoes e etc, instalar ctags: sudo apt-get install exuberant-ctags
 Plug 'tpope/vim-fugitive'                                           " Comandos git
 Plug 'airblade/vim-gitgutter'                                       " Marcações + - _ ~ de git
-Plug 'SirVer/ultisnips'                                             " Snippets
-Plug 'honza/vim-snippets'                                           " Snippets prontos
+Plug 'SirVer/ultisnips'                                             " engine de snippets
+Plug 'honza/vim-snippets'                                           " pacote de snippets
 Plug 'gregsexton/gitv', {'on': ['Gitv']}                            " branchs
 Plug 'w0rp/ale'                                                     " Lint geral do vim
 Plug 'dracula/vim'                                                  " colorscheme
@@ -194,14 +194,16 @@ nnoremap <leader><space> :noh<cr>
 "######################################################
 augroup tex
     "" compila e abre evince ou somente compila
-    au FileType tex nmap <leader>re <Esc>:w<CR>:!clear;pdflatex %;evince '%:r'.pdf &<CR><CR>
-    au FileType tex nmap <leader>RE <Esc>:w<CR>:!clear;pdflatex %;evince '%:r'.pdf &<CR><CR>
-    au FileType tex inoremap <leader>re <Esc>:w<CR>:!clear;pdflatex %;evince '%:r'.pdf &<CR><CR>
-    au FileType tex inoremap <leader>RE <Esc>:w<CR>:!clear;pdflatex %;evince '%:r'.pdf &<CR><CR>
-    au FileType tex nmap <leader>rr <Esc>:w<CR>:!clear;pdflatex %<CR><CR>
-    au FileType tex nmap <leader>RR <Esc>:w<CR>:!clear;pdflatex %<CR><CR>
-    au FileType tex inoremap <leader>rr <Esc>:w<CR>:!clear;pdflatex %<CR><CR>a
-    au FileType tex inoremap <leader>RR <Esc>:w<CR>:!clear;pdflatex %<CR><CR>a
+    au FileType tex nmap <leader>e <Esc>:w<CR>:!clear;evince '%:r'.pdf &<CR><CR>
+    au FileType tex nmap <leader>E <Esc>:w<CR>:!clear;evince '%:r'.pdf &<CR><CR>
+    au FileType tex inoremap <leader>e <Esc>:w<CR>:!clear;pdflatex %;evince '%:r'.pdf &<CR><CR>
+    au FileType tex inoremap <leader>E <Esc>:w<CR>:!clear;pdflatex %;evince '%:r'.pdf &<CR><CR>
+    au FileType tex nmap <leader>r <Esc>:w<CR>:!clear;pdflatex %<CR><CR>
+    au FileType tex nmap <leader>R <Esc>:w<CR>:!clear;pdflatex %<CR><CR>
+    au FileType tex inoremap <leader>r <Esc>:w<CR>:!clear;pdflatex %<CR><CR>a
+    au FileType tex inoremap <leader>R <Esc>:w<CR>:!clear;pdflatex %<CR><CR>a
+
+    au FileType tex inoremap { {}<left>
 augroup END
 
 "######################################################
@@ -323,9 +325,9 @@ let g:go_highlight_extra_types = 1
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<c-b>"
 let g:UltiSnipsEditSplit="vertical"
-let g:UltiSnipsSnippetDirectories=[$HOME.'/.vim/UltiSnips']
-let g:UltiSnipsSnippetsDir="~/.vim/UltiSnips"
-let g:tex_flavor='latex'
+let g:UltiSnipsSnippetDirectories=[$HOME.'/.vim/dacs-snippets']
+let g:UltiSnipsSnippetsDir="~/.vim/dacs-snippets"
+let g:tex_flavor='latex' "ultisnippets reconhecerem .tex
 
 "" trigger com enter quano possível
 "" https://github.com/Valloric/YouCompleteMe/issues/420
@@ -398,7 +400,7 @@ fun! ToggleGerenciador()
         let g:tnet = 1
     endif
 endfun
-nnoremap <space> :call ToggleGerenciador()<cr>
+nnoremap <s-cr> :call ToggleGerenciador()<cr>
 
 "######################################################
 "# Tabline

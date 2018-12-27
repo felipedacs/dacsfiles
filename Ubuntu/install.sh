@@ -1,6 +1,10 @@
+# -------------------------- MAIN -------------------------- #
+instalaWhiptail(){
+    sudo apt-get install -y whiptail
+}
 # --------------------------- BASE ------------------------- #
 instalaWGet(){
-    sudo apt-get install wget
+    sudo apt-get install -y wget
 }
 
 instalaCURL(){
@@ -21,10 +25,6 @@ instalaScrot(){
     sudo apt-get install -y scrot
 }
 
-instalaSynapse(){
-    sudo apt-get install -y synapse
-}
-
 instalaTemas(){
     sudo add-apt-repository -y ppa:noobslab/themes
     sudo add-apt-repository -y ppa:papirus/papirus
@@ -34,7 +34,7 @@ instalaTemas(){
 }
 
 instalaDiversos(){
-    echo "-"
+    sudo apt-get install -y synapse
 }
 # ---------------------------------------------------------- #
 
@@ -57,9 +57,8 @@ instalaPHP(){
 }
 
 instalaComposer(){
-    sudo curl -s https://getcomposer.org/installer | php
-    sudo mv composer.phar /usr/local/bin/composer
-
+    # https://www.digitalocean.com/community/tutorials/how-to-install-and-use-composer-on-ubuntu-14-04
+    curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
 }
 # ---------------------------------------------------------- #
 
@@ -108,7 +107,7 @@ installPostman(){
 }
 
 installUmbrello(){
-    sudo apt-get install umbrello
+    sudo apt-get install -y umbrello
 }
 
 # ---------------------------------------------------------- #
@@ -120,6 +119,7 @@ installDiscord(){
     wget "https://discordapp.com/api/download?platform=linux&format=deb" -O discord.deb
     sudo dpkg -i discord.deb
     sudo apt-get install -f
+    rm discord.deb
 }
 
 installCalibre(){
