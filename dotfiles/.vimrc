@@ -185,9 +185,22 @@ nnoremap <S-Tab> gT
 "" Clean search (highlight) ", "
 nnoremap <leader><space> :noh<cr>
 
+"indent all file and go back
+nnoremap <C-A> i<++><esc>gg=G:%s/<++>/<esc>
+
 "*****************************************************************************
 "" Custom configs langs
 "*****************************************************************************
+"######################################################
+"# SHELL
+"######################################################
+augroup sh
+    "" compila e abre evince ou somente compila
+    au FileType sh nmap <leader>r <Esc>:w<CR>:!clear;chmod +x % ; ./%<CR>
+
+ ""   au FileType sh inoremap #! #!/usr/bin/env bash<cr>#<cr># <C-R>=expand("%:t")<cr> - <++><cr>#<cr># github, gitlab, linkedin: felipedacs<cr># ------------------------------------ #<cr><esc>/<++><cr>C
+augroup END
+
 "######################################################
 "# TEX
 "######################################################
