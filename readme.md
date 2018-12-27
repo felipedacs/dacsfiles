@@ -1,5 +1,5 @@
-# dotstuff
-> my dotfiles and others stuff
+# dacsfiles
+> dotfiles, wallpapers, bootstrap scripts e etc
 * http://df.dacs.run
 
 ## Instalação
@@ -11,4 +11,10 @@ git clone https://github.com/felipedacs/dotfiles.git ~/dev/dotfiles
 #instalar
 chmod +x ~/dev/dotfiles/install.sh
 ~/dev/dotfiles/install.sh
+```
+
+## Atualização
+```bash
+git fetch --all
+git reset --hard origin/master
 ```

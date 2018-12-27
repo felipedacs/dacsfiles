@@ -5,7 +5,7 @@ alias cphp='cd ~/dev/php'
 alias cpy='cd ~/dev/python'
 alias cfront='cd ~/dev/front/'
 alias cgo='cd ~/go/src/github.com/felipedacs'
-alias cdf='cd ~/dev/dotfiles ; l'
+alias cdf='cd ~/dev/dacsfiles ; l'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
@@ -14,6 +14,7 @@ alias ....='cd ../../..'
 alias ga="git add ."
 alias gc="git commit"
 alias gps='git push origin master'
+alias gfr='git fetch --all ; git reset --hard origin/master'
 alias gs='git status'
 
 # LS
@@ -23,7 +24,7 @@ alias l='ls -XF --color'
 alias sct='scrot -s -d 5 -c ~/Imagens/prints/scrot::%Y-%m-%d::%H%M%S.jpg'
 
 # etc
-#alias pc='pcmanfm'
+alias op='xdg-open .'
 alias v='vim'
 
 # sites
