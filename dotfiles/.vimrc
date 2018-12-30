@@ -29,25 +29,27 @@ endif
 
 " Required:
 call plug#begin(expand('~/.vim/plugged'))
-
 "*****************************************************************************
 "" Plug install packages
 "*****************************************************************************
-Plug 'majutsushi/tagbar'                                            " Barra lateral com variáveis, funçoes e etc, instalar ctags: sudo apt-get install exuberant-ctags
-Plug 'tpope/vim-fugitive'                                           " Comandos git
-Plug 'airblade/vim-gitgutter'                                       " Marcações + - _ ~ de git
-Plug 'SirVer/ultisnips'                                             " engine de snippets
-Plug 'honza/vim-snippets'                                           " pacote de snippets
-Plug 'gregsexton/gitv', {'on': ['Gitv']}                            " branchs
-Plug 'w0rp/ale'                                                     " Lint geral do vim
-Plug 'dracula/vim'                                                  " colorscheme
+"Barra lateral que mostra variáveis, funçoes objetos e etc
+"instalar ctags: sudo apt-get install exuberant-ctags
+Plug 'majutsushi/tagbar'                     
+
+Plug 'airblade/vim-gitgutter'    " Marcações + - _ ~ de git
+Plug 'SirVer/ultisnips'          " engine de snippets
+Plug 'honza/vim-snippets'        " pacote de snippets
+Plug 'w0rp/ale'                  " Lint geral do vim
+Plug 'dracula/vim'               " colorscheme
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }                  " ferramentas com go
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }   " ctrl p
 Plug 'junegunn/fzf.vim'                                             " ctrl p
-Plug 'sheerun/vim-polyglot'                                         " Sintaxe de linguagens vim, deve ser instalado DEPOIS do vim go
-Plug 'junegunn/goyo.vim'                                            " Apresentação de código com :Goyo
-call plug#end()
 
+" Sintaxe de linguagens vim
+" deve ser instalado DEPOIS do vim go
+Plug 'sheerun/vim-polyglot'
+
+call plug#end()
 "*****************************************************************************
 "" Basic Setup
 "*****************************************************************************"
@@ -126,13 +128,16 @@ nnoremap N Nzzzv
 cnoreabbrev W! w!
 cnoreabbrev Q! q!
 cnoreabbrev Qall! qall!
+cnoreabbrev Qa! qa!
+cnoreabbrev QA! qa!
 cnoreabbrev Wq wq
 cnoreabbrev Wa wa
 cnoreabbrev wQ wq
 cnoreabbrev WQ wq
 cnoreabbrev W w
 cnoreabbrev Q q
-cnoreabbrev Qall qall
+cnoreabbrev Qa qa
+cnoreabbrev QA qa
 
 "######################################################
 "# Help
@@ -153,10 +158,17 @@ cnoreabbrev dacs Dacs
 nnoremap j jzz
 nnoremap k kzz
 
-"procura por arquivos com plug fzf
-nnoremap <c-f> :tabfind ./
+"only hjkl
+inoremap <up> <nop>
+inoremap <down> <nop>
+inoremap <left> <nop>
+inoremap <right> <nop>
+noremap <up> <nop>
+noremap <down> <nop>
+noremap <left> <nop>
+noremap <right> <nop>
+
 set wildmenu
-"procura por arquivos com plug fzf
 nnoremap <c-n> :tabe 
 
 "acabar com o ctrl z
@@ -180,14 +192,17 @@ noremap <C-h> <C-w>h
 "" Tabs
 nnoremap <Tab> gt
 nnoremap <S-Tab> gT
-"nnoremap <S-t> :tabnew 
 
-"" Clean search (highlight) ", "
+"" Clean search (highlight)
 nnoremap <leader><space> :noh<cr>
 
 "indent all file and go back
 nnoremap <C-A> i<++><esc>gg=G:%s/<++>/<esc>
 
+" git
+noremap <Leader>gw :!git add %<CR><CR>:echo "git add " . %<CR>
+noremap <Leader>ga :!git add .<CR><CR>:echo "git add ."<CR>
+noremap <Leader>gs :!git status<CR>
 "*****************************************************************************
 "" Custom configs langs
 "*****************************************************************************
@@ -198,7 +213,7 @@ augroup sh
     "" compila e abre evince ou somente compila
     au FileType sh nmap <leader>r <Esc>:w<CR>:!clear;chmod +x % ; ./%<CR>
 
- ""   au FileType sh inoremap #! #!/usr/bin/env bash<cr>#<cr># <C-R>=expand("%:t")<cr> - <++><cr>#<cr># github, gitlab, linkedin: felipedacs<cr># ------------------------------------ #<cr><esc>/<++><cr>C
+    au FileType sh inoremap #! #!/usr/bin/env bash<cr>#<cr># <C-R>=expand("%:t")<cr> - <++><cr>#<cr># github, gitlab, linkedin: felipedacs<cr># ------------------------------------ #<cr><esc>/<++><cr>C
 augroup END
 
 "######################################################
@@ -206,15 +221,8 @@ augroup END
 "######################################################
 augroup tex
     "" compila e abre evince ou somente compila
-    au FileType tex nmap <leader>e <Esc>:w<CR>:!clear;evince '%:r'.pdf &<CR><CR>
-    au FileType tex nmap <leader>E <Esc>:w<CR>:!clear;evince '%:r'.pdf &<CR><CR>
-    au FileType tex inoremap <leader>e <Esc>:w<CR>:!clear;pdflatex %;evince '%:r'.pdf &<CR><CR>
-    au FileType tex inoremap <leader>E <Esc>:w<CR>:!clear;pdflatex %;evince '%:r'.pdf &<CR><CR>
     au FileType tex nmap <leader>r <Esc>:w<CR>:!clear;pdflatex %<CR><CR>
-    au FileType tex nmap <leader>R <Esc>:w<CR>:!clear;pdflatex %<CR><CR>
-    au FileType tex inoremap <leader>r <Esc>:w<CR>:!clear;pdflatex %<CR><CR>a
-    au FileType tex inoremap <leader>R <Esc>:w<CR>:!clear;pdflatex %<CR><CR>a
-
+    au FileType tex nmap <leader>e <Esc>:w<CR>:!clear;evince '%:r'.pdf &<CR><CR>
     au FileType tex inoremap { {}<left>
 augroup END
 
@@ -222,33 +230,33 @@ augroup END
 "# GO
 "######################################################
 "" Execução
-""nnoremap <leader>gr <Esc>:w<CR>:!clear;go run %<CR>
-
 function ComentaVisual()
     execute "normal! 0i//"
 endfunction
 
 augroup go
-    "" Comenta
+    " comenta
     au FileType go vnoremap ;; :s/\/\//<cr>:noh<CR>
     au FileType go vnoremap // :call ComentaVisual()<CR>
-    au FileType go nmap ;; :s/\/\/\t/<cr>:noh<CR>==
-    au FileType go nmap // I//<tab><esc>
+    au FileType go nmap ;; :s/\/\//<cr>:noh<CR>==
+    au FileType go nmap // I//<esc>
 
+    " executa
     au FileType go nmap <leader>r <Plug>(go-run)
 
-    au FileType go nmap <leader>a :w<CR>:GoAlternate<CR>
-    au Filetype go command! -bang AV call go#alternate#Switch(<bang>0, 'vsplit')
-    au Filetype go command! -bang AI call go#alternate#Switch(<bang>0, 'split')
-
+    " testa
     au FileType go nmap <leader>tp <Plug>(go-test)
     au FileType go nmap <leader>tt :GoTest ./...<CR>
     au FileType go nmap <leader>tf <Plug>(go-test-func)
     au FileType go nmap <leader>cc <Plug>(go-coverage-toggle)
     au FileType go nmap <leader>cb :GoCoverageBrowser<CR>
-
-    au FileType go nmap <leader>i :GoImport 
+    au FileType go nmap <leader>a :w<CR>:GoAlternate<CR>
+    ":AV
+    au Filetype go command! -bang AV call go#alternate#Switch(<bang>0, 'vsplit')
+    ":AI
+    au Filetype go command! -bang AI call go#alternate#Switch(<bang>0, 'split')
     
+   " documentação 
     au FileType go nmap <leader>dv <Plug>(go-doc)
     au FileType go nmap <leader>db <Plug>(go-doc-browser)
     au FileType go nmap <leader>gi <Plug>(go-info)
@@ -275,7 +283,7 @@ augroup END
 "# PYTHON
 "######################################################
 " Execução
-nnoremap <leader>py <Esc>:w<CR>:!clear;python3 %<CR>
+""nnoremap <leader>py <Esc>:w<CR>:!clear;python3 %<CR>
 
 "######################################################
 "# PHP
@@ -284,28 +292,11 @@ nnoremap <leader>py <Esc>:w<CR>:!clear;python3 %<CR>
 "######################################################
 "# C
 "######################################################
-nnoremap <leader>gc <Esc>:w<CR>:!clear;gcc % -o executavel ; ./executavel ; rm executavel<CR>
+""nnoremap <leader>gc <Esc>:w<CR>:!clear;gcc % -o executavel ; ./executavel ; rm executavel<CR>
 
 "*****************************************************************************
 "" Plugins config
 "*****************************************************************************
-
-"" Git 
-noremap <Leader>gw :Gwrite<CR>
-noremap <Leader>ga :Git add .<CR><CR>:echo "git add ."<CR>
-noremap <Leader>gc :Gcommit<CR>
-noremap <Leader>gsh :Gpush<CR>
-noremap <Leader>gll :Gpull<CR>
-noremap <Leader>gs :Gstatus<CR>
-noremap <Leader>gb :Gblame<CR>
-noremap <Leader>gd :Gvdiff<CR>
-noremap <Leader>gr :Gremove<CR>
-
-"######################################################
-"# Tagbar
-"######################################################
-nmap <silent> <bs> :TagbarToggle<CR>
-let g:tagbar_autofocus = 1
 
 "######################################################
 "# Polyglot
@@ -328,20 +319,6 @@ let g:go_fmt_fail_silently = 1
 let g:go_info_mode='guru'
 
 autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4
-
-" enfeitar o editor, pode tornar vim mais lento!
-let g:go_highlight_types = 1 
-let g:go_highlight_fields = 1 
-let g:go_highlight_functions = 1 
-let g:go_highlight_methods = 1 
-let g:go_highlight_operators = 1 
-let g:go_highlight_build_constraints = 1 
-let g:go_highlight_structs = 1 
-let g:go_highlight_generate_tags = 1 
-let g:go_highlight_space_tab_error = 0 
-let g:go_highlight_array_whitespace_error = 0 
-let g:go_highlight_trailing_whitespace_error = 0 
-let g:go_highlight_extra_types = 1
 
 "######################################################
 "# UltiSnips
@@ -379,10 +356,16 @@ fun! TabComplete()
 endfun
 
 "######################################################
+"# TagBar
+"######################################################
+map <bs> :Tagbar<cr>
+
+"######################################################
 "# Gitgutter
 "######################################################
 " [c -> previous hunk   ]c -> next hunk
-set updatetime=100 "atualização mais rápida de +-
+" set updatetime=100 "atualização mais rápida de +-
+let g:gitgutter_enabled=0
 
 "######################################################
 "# Ale
@@ -392,16 +375,14 @@ function! LinterStatus() abort
 
     let l:all_errors = l:counts.error + l:counts.style_error
 
-    return l:counts.total == 0 ? '' : ',z'
+    return l:counts.total == 0 ? '' : '!'
 endfunction
 
-nmap <silent> <leader>z <Plug>(ale_previous_wrap)
-nmap <silent> <leader>x <Plug>(ale_next_wrap)
+nmap <silent> <leader><leader> <Plug>(ale_previous_wrap)
 
 "*****************************************************************************
 "" Vim Built-in plugins config
 "*****************************************************************************
-
 "######################################################
 "# File browsing
 "######################################################
@@ -429,7 +410,6 @@ nnoremap <s-cr> :call ToggleGerenciador()<cr>
 "######################################################
 "# Tabline
 "######################################################
-
 " tabline number
 " creditos: http://vim.wikia.com/wiki/Show_tab_number_in_your_tab_line
 if exists("+showtabline")
@@ -441,7 +421,8 @@ if exists("+showtabline")
             let buflist = tabpagebuflist(i)
             let winnr = tabpagewinnr(i)
             let s .= (i == t ? '%#TabLineSel#' : '%#TabLine#')
-            let s .= ' ['. i . ']'
+            let s .= (i == t ? '%m' : '')
+            let s .= '['. i .']'
             let file = bufname(buflist[winnr - 1])
             let file = fnamemodify(file, ':p:t')
             if file == ''
@@ -452,62 +433,9 @@ if exists("+showtabline")
         endwhile
         let s .= '%T%#TabLineFill#%='
         let s .= (tabpagenr('$') > 1 ? '%999XX' : 'X')
+        let s .= LinterStatus()
         return s
     endfunction
     set stal=2
     set tabline=%!MyTabLine()
 endif
-
-"######################################################
-"# statusline
-"######################################################
-"créditos: https://gabri.me/blog/diy-vim-statusline
-"créditos: https://kadekillary.work/post/statusline/
-set laststatus=2	"fixar status bar
-
-" :h cterm
-hi User1 guibg=darkred guifg=white cterm=bold
-hi User2 guibg=lightgray guifg=black cterm=bold
-hi User3 guibg=grey guifg=black
-hi User4 guibg=darkgray guifg=black
-hi User5 guibg=lightgray guifg=red cterm=bold
-
-" plugin linter w0rp/ale
-hi User6 guibg=red guifg=white cterm=bold
-
-fun! InsertStatuslineColor()
-    hi User1 guibg=darkred guifg=white cterm=bold
-    hi User2 guibg=lightgray guifg=black cterm=bold
-    hi User3 guibg=Green guifg=black
-    hi User4 guibg=DarkGreen guifg=white
-    hi User5 guibg=lightgray guifg=red cterm=bold
-endfun
-
-fun! InsertLeaveActions()
-    hi User1 guibg=darkred guifg=white cterm=bold
-    hi User2 guibg=lightgray guifg=black cterm=bold
-    hi User3 guibg=grey guifg=black
-    hi User4 guibg=darkgray guifg=black
-    hi User5 guibg=lightgray guifg=red cterm=bold
-endfun
-
-au InsertEnter * call InsertStatuslineColor()
-au InsertLeave * call InsertLeaveActions()
-
-"delay entre atalhos
-set ttimeout
-set ttimeoutlen=100
-set timeoutlen=3000
-
-fun! CurrentGitStatus()
-    let g:gitstatus =  system("git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'")
-endfun
-au BufEnter,BufWritePost * call CurrentGitStatus()
-
-set statusline+=
-set statusline+=\%1*\%{FugitiveStatusline()} 	" branch
-set statusline+=\%5*\ %m\%2*\%f\ %* 	        " nome abreviado/teste readonly/modificado/
-set statusline+=\%3*\ %F					    " full path
-set statusline+=%=						        " Espaço
-set statusline+=\%4*\ %p%%\ %l:\%c              " Rownumber/total (%)
-set statusline+=\%6*\%{LinterStatus()}          " Plugin Ale

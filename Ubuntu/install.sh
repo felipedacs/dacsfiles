@@ -13,6 +13,9 @@ instalaCURL(){
 
 instalaVim(){
     sudo apt-get install -y vim
+
+    #tagbar
+    sudo apt-get install -y exuberant-ctags
 }
 
 instalaAtom(){
