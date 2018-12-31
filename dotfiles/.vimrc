@@ -34,11 +34,10 @@ call plug#begin(expand('~/.vim/plugged'))
 "*****************************************************************************
 "Barra lateral que mostra variáveis, funçoes objetos e etc
 "instalar ctags: sudo apt-get install exuberant-ctags
-Plug 'majutsushi/tagbar'                     
+Plug 'majutsushi/tagbar'
 
 Plug 'airblade/vim-gitgutter'    " Marcações + - _ ~ de git
 Plug 'SirVer/ultisnips'          " engine de snippets
-Plug 'honza/vim-snippets'        " pacote de snippets
 Plug 'w0rp/ale'                  " Lint geral do vim
 Plug 'dracula/vim'               " colorscheme
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }                  " ferramentas com go
@@ -48,7 +47,6 @@ Plug 'junegunn/fzf.vim'                                             " ctrl p
 " Sintaxe de linguagens vim
 " deve ser instalado DEPOIS do vim go
 Plug 'sheerun/vim-polyglot'
-
 call plug#end()
 "*****************************************************************************
 "" Basic Setup
@@ -127,7 +125,6 @@ nnoremap N Nzzzv
 "" no one is really happy until you have this shortcuts
 cnoreabbrev W! w!
 cnoreabbrev Q! q!
-cnoreabbrev Qall! qall!
 cnoreabbrev Qa! qa!
 cnoreabbrev QA! qa!
 cnoreabbrev Wq wq
@@ -169,6 +166,13 @@ noremap <left> <nop>
 noremap <right> <nop>
 
 set wildmenu
+set wildmode=list:full
+set completeopt=longest,menuone,preview " cool completion view
+set completeopt+=noselect               " deixar digitar
+set wildchar=<Tab>                      " (default)
+set omnifunc=syntaxcomplete#Complete    " ctrl-x ctrl-o
+set complete=.,w,b,u,t
+
 nnoremap <c-n> :tabe 
 
 "acabar com o ctrl z
@@ -180,8 +184,8 @@ nnoremap <c-z> u
 noremap <Leader>h :<C-u>split<CR>
 noremap <Leader>v :<C-u>vsplit<CR>
 "search an file
-noremap <Leader>l :<C-u>vsp 
-noremap <Leader>j :<C-u>sp 
+noremap <Leader>l :<C-u>vsp
+noremap <Leader>j :<C-u>sp
 
 "" Switching windows
 noremap <C-j> <C-w>j
@@ -201,8 +205,9 @@ nnoremap <C-A> i<++><esc>gg=G:%s/<++>/<esc>
 
 " git
 noremap <Leader>gw :!git add %<CR><CR>:echo "git add " . %<CR>
-noremap <Leader>ga :!git add .<CR><CR>:echo "git add ."<CR>
 noremap <Leader>gs :!git status<CR>
+
+noremap <Leader>. :pwd<CR>
 "*****************************************************************************
 "" Custom configs langs
 "*****************************************************************************
@@ -212,8 +217,6 @@ noremap <Leader>gs :!git status<CR>
 augroup sh
     "" compila e abre evince ou somente compila
     au FileType sh nmap <leader>r <Esc>:w<CR>:!clear;chmod +x % ; ./%<CR>
-
-    au FileType sh inoremap #! #!/usr/bin/env bash<cr>#<cr># <C-R>=expand("%:t")<cr> - <++><cr>#<cr># github, gitlab, linkedin: felipedacs<cr># ------------------------------------ #<cr><esc>/<++><cr>C
 augroup END
 
 "######################################################
@@ -255,13 +258,13 @@ augroup go
     au Filetype go command! -bang AV call go#alternate#Switch(<bang>0, 'vsplit')
     ":AI
     au Filetype go command! -bang AI call go#alternate#Switch(<bang>0, 'split')
-    
-   " documentação 
+
+   " documentação
     au FileType go nmap <leader>dv <Plug>(go-doc)
     au FileType go nmap <leader>db <Plug>(go-doc-browser)
     au FileType go nmap <leader>gi <Plug>(go-info)
 
-    "<- [[ 
+    "<- [[
     "-> ]]
     au FileType go nmap <leader>dc :GoDecls<CR>
     au FileType go nmap <leader>dd :GoDeclsDir<CR>
@@ -313,7 +316,7 @@ nnoremap <c-p> :Files<CR>
 "######################################################
 "# Vim Go
 "######################################################
-let g:go_list_type = "quickfix" 
+let g:go_list_type = "quickfix"
 let g:go_fmt_command = "goimports" " import automatico ao salvar
 let g:go_fmt_fail_silently = 1
 let g:go_info_mode='guru'
@@ -323,37 +326,13 @@ autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4
 "######################################################
 "# UltiSnips
 "######################################################
+let g:UltiSnipsExpandTrigger = "<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<c-b>"
 let g:UltiSnipsEditSplit="vertical"
 let g:UltiSnipsSnippetDirectories=[$HOME.'/.vim/dacs-snippets']
 let g:UltiSnipsSnippetsDir="~/.vim/dacs-snippets"
 let g:tex_flavor='latex' "ultisnippets reconhecerem .tex
-
-"" trigger com enter quano possível
-"" https://github.com/Valloric/YouCompleteMe/issues/420
-let g:UltiSnipsExpandTrigger = "<nop>"
-let g:ulti_expand_or_jump_res = 0
-function ExpandSnippetOrCarriageReturn()
-    let snippet = UltiSnips#ExpandSnippetOrJump()
-    if g:ulti_expand_or_jump_res > 0
-        return snippet
-    else
-        return "\<CR>"
-    endif
-endfunction
-inoremap <expr> <CR> pumvisible() ? "<C-R>=ExpandSnippetOrCarriageReturn()<CR>" : "\<CR>"
-
-"" tab como ctrl n quando preciso
-inoremap <expr> <Tab> TabComplete()
-fun! TabComplete()
-    if getline('.')[col('.') - 2] =~ '\K' || pumvisible()
-        ""return "\<down>"
-        return "\<c-n>"
-    else
-        return "\<Tab>"
-    endif
-endfun
 
 "######################################################
 "# TagBar
@@ -372,9 +351,7 @@ let g:gitgutter_enabled=0
 "######################################################
 function! LinterStatus() abort
     let l:counts = ale#statusline#Count(bufnr(''))
-
     let l:all_errors = l:counts.error + l:counts.style_error
-
     return l:counts.total == 0 ? '' : '!'
 endfunction
 
@@ -439,3 +416,18 @@ if exists("+showtabline")
     set stal=2
     set tabline=%!MyTabLine()
 endif
+
+function! g:UltiSnips_Complete()
+    call UltiSnips#ExpandSnippet()
+    if g:ulti_expand_res == 0
+        if pumvisible()
+            return "\<C-n>"
+        else
+            call UltiSnips#JumpForwards()
+            if g:ulti_jump_forwards_res == 0
+               return "\<TAB>"
+            endif
+        endif
+    endif
+    return ""
+endfunction

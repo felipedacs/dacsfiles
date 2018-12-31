@@ -1,0 +1,64 @@
+snippet func
+func ${1:name}(${2:params})${3/(.+)/ /}${3:type} {
+	${0:${VISUAL}}
+	aaaaaaa
+	bbbb
+}
+endsnippet
+
+snippet fp
+fmt.Println(${1})
+endsnippet
+
+snippet imp
+import (
+	"${1:package}"
+)
+endsnippet
+
+snippet pkg
+package "${1:package}"
+endsnippet
+
+snippet pkgm
+package main
+endsnippet
+
+# declaração de struct
+snippet struct
+type ${1:Struct} struct {
+	${0:${VISUAL}}
+}
+
+# declaração de interface
+snippet interface
+type ${1:Interface} interface {
+	${0:${VISUAL}}
+}
+endsnippet
+
+# if
+snippet if
+if ${1:condition}${1/(.+)/ /}{
+	${0:${VISUAL}}
+}
+endsnippet
+
+# HTTP handler
+snippet funch
+func ${1:handler}(${2:w} http.ResponseWriter, ${3:r} *http.Request) {
+	${0:${VISUAL}}
+}
+endsnippet
+
+# inicialização e atribuição
+snippet :
+${1:name} := ${0:value}
+endsnippet
+
+# teste de erro padrão
+snippet iferr "Basic error handling" b
+if err != nil {
+	${0:${VISUAL}}
+}
+endsnippet
