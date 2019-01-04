@@ -1,8 +1,6 @@
 snippet func
 func ${1:name}(${2:params})${3/(.+)/ /}${3:type} {
 	${0:${VISUAL}}
-	aaaaaaa
-	bbbb
 }
 endsnippet
 
@@ -57,7 +55,7 @@ ${1:name} := ${0:value}
 endsnippet
 
 # teste de erro padrão
-snippet iferr "Basic error handling" b
+snippet iferr
 if err != nil {
 	${0:${VISUAL}}
 }

@@ -232,7 +232,6 @@ augroup END
 "######################################################
 "# GO
 "######################################################
-"" Execução
 function ComentaVisual()
     execute "normal! 0i//"
 endfunction
@@ -334,6 +333,8 @@ let g:UltiSnipsSnippetDirectories=[$HOME.'/.vim/dacs-snippets']
 let g:UltiSnipsSnippetsDir="~/.vim/dacs-snippets"
 let g:tex_flavor='latex' "ultisnippets reconhecerem .tex
 
+noremap <tab><tab> :UltiSnipsEdit<cr>/\<snippet\> .*<cr>N:echo "tecle n"<cr>
+
 "######################################################
 "# TagBar
 "######################################################
@@ -416,18 +417,3 @@ if exists("+showtabline")
     set stal=2
     set tabline=%!MyTabLine()
 endif
-
-function! g:UltiSnips_Complete()
-    call UltiSnips#ExpandSnippet()
-    if g:ulti_expand_res == 0
-        if pumvisible()
-            return "\<C-n>"
-        else
-            call UltiSnips#JumpForwards()
-            if g:ulti_jump_forwards_res == 0
-               return "\<TAB>"
-            endif
-        endif
-    endif
-    return ""
-endfunction
