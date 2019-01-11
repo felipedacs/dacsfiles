@@ -117,6 +117,7 @@ nnoremap N Nzzzv
 "*****************************************************************************
 " fechar automaticamente
 :inoremap ¢ ()<left>
+:inoremap ( ()<left>
 :inoremap { {}<left><cr><cr><up><tab>
 :inoremap [ []<left>
 :inoremap " ""<left>
@@ -233,15 +234,15 @@ augroup END
 "# GO
 "######################################################
 function ComentaVisual()
-    execute "normal! 0i//"
+    execute "normal! I// "
 endfunction
 
 augroup go
     " comenta
-    au FileType go vnoremap ;; :s/\/\//<cr>:noh<CR>
+    au FileType go vnoremap ;; :s/\/\/ /<cr>:noh<CR>
     au FileType go vnoremap // :call ComentaVisual()<CR>
-    au FileType go nmap ;; :s/\/\//<cr>:noh<CR>==
-    au FileType go nmap // I//<esc>
+    au FileType go nmap ;; :s/\/\/ /<cr>:noh<CR>==
+    au FileType go nmap // I// <esc>
 
     " executa
     au FileType go nmap <leader>r <Plug>(go-run)
@@ -313,7 +314,7 @@ endif
 nnoremap <c-p> :Files<CR>
 
 "######################################################
-"# Vim Go
+"# Vim-Go
 "######################################################
 let g:go_list_type = "quickfix"
 let g:go_fmt_command = "goimports" " import automatico ao salvar
@@ -325,6 +326,8 @@ autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4
 "######################################################
 "# UltiSnips
 "######################################################
+au FileType snippets inoremap { {}<left>
+
 let g:UltiSnipsExpandTrigger = "<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<c-b>"
@@ -333,7 +336,7 @@ let g:UltiSnipsSnippetDirectories=[$HOME.'/.vim/dacs-snippets']
 let g:UltiSnipsSnippetsDir="~/.vim/dacs-snippets"
 let g:tex_flavor='latex' "ultisnippets reconhecerem .tex
 
-noremap <tab><tab> :UltiSnipsEdit<cr>/\<snippet\> .*<cr>N:echo "tecle n"<cr>
+noremap <leader><tab> :UltiSnipsEdit<cr>/\<snippet\> .*<cr>N:echo "tecle n"<cr>
 
 "######################################################
 "# TagBar
@@ -356,7 +359,7 @@ function! LinterStatus() abort
     return l:counts.total == 0 ? '' : '!'
 endfunction
 
-nmap <silent> <leader><leader> <Plug>(ale_previous_wrap)
+nmap <silent> ! <Plug>(ale_previous_wrap)
 
 "*****************************************************************************
 "" Vim Built-in plugins config

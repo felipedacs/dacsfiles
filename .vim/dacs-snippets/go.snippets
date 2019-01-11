@@ -1,11 +1,37 @@
+# for comum
+snippet for
+for ${1:condition} {
+	${0}
+}
+endsnippet
+
+# for com contador
+snippet fori
+for ${1:i} := ${2:0}; $1 ${3:<} ${4:10}; $1${5:++} {
+	${0}
+}
+endsnippet
+
+# "foreach"
+snippet forr
+for ${1:_}, ${2:num} := range ${3:nums} {
+	${0}
+}
+endsnippet
+
+# declaração de função
 snippet func
-func ${1:name}(${2:params})${3/(.+)/ /}${3:type} {
+func ${1:name}(${2:params}) ${3:type} {
 	${0:${VISUAL}}
 }
 endsnippet
 
 snippet fp
 fmt.Println(${1})
+endsnippet
+
+snippet ff
+fmt.Printf("${1}", ${2})
 endsnippet
 
 snippet imp
@@ -27,6 +53,7 @@ snippet struct
 type ${1:Struct} struct {
 	${0:${VISUAL}}
 }
+endsnippet
 
 # declaração de interface
 snippet interface
@@ -37,8 +64,15 @@ endsnippet
 
 # if
 snippet if
-if ${1:condition}${1/(.+)/ /}{
+if ${1:condition} {
 	${0:${VISUAL}}
+}
+endsnippet
+
+snippet switch
+switch ${1:expression} {
+case ${2}:
+	$0
 }
 endsnippet
 
