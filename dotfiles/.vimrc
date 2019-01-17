@@ -115,13 +115,17 @@ nnoremap N Nzzzv
 "*****************************************************************************
 "" Abbreviations
 "*****************************************************************************
+noremap <leader><leader> <ESC>/<,,<<CR>v/<<CR>c
+inoremap <leader><leader> <ESC>/<,,<<CR>v/<<CR>c
+
 " fechar automaticamente
-:inoremap ¢ ()<left>
-:inoremap ( ()<left>
-:inoremap { {}<left><cr><cr><up><tab>
-:inoremap [ []<left>
-:inoremap " ""<left>
-:inoremap ' ''<left>
+" melhorar o <left><left>...... !!!!!
+inoremap ¢ ()<,,<<left><left><left><left><left>
+inoremap ( ()<,,<<left><left><left><left><left>
+inoremap { {}<,,<<left><left><left><left><left><cr><cr><up><tab>
+inoremap [ []<,,<<left><left><left><left><left>
+inoremap " ""<,,<<left><left><left><left><left>
+inoremap ' ''<,,<<left><left><left><left><left>
 
 "" no one is really happy until you have this shortcuts
 cnoreabbrev W! w!
@@ -212,37 +216,74 @@ noremap <Leader>. :pwd<CR>
 "*****************************************************************************
 "" Custom configs langs
 "*****************************************************************************
+" funções para comentar linhas de código
+" parametro deve ser entre aspas e conter, se necessário, espaço e contra-barra
+function ComentaNormal(carac)
+    execute "normal! I".a:carac
+    echo a:carac
+endfunction
+
+function DescomentaNormal(carac)
+    execute ":s/".a:carac."/"
+    execute ":noh"
+    execute "normal! =="
+endfunction
+
+function ComentaVisual(carac)
+    execute "normal! I".a:carac
+endfunction
+
+function DescomentaVisual(carac)
+    execute ":s/".a:carac."/"
+    execute ":noh"
+endfunction
+
+"######################################################
+"# SHELL
+"######################################################
+augroup markdown
+    "" compila e abre evince
+    au FileType markdown nmap <leader>r <Esc>:w<CR>:!clear;pandoc % -o '%:r'.pdf<CR><CR>
+    au FileType markdown nmap <leader>e <Esc>:w<CR>:!clear;evince '%:r'.pdf &<CR><CR>
+augroup END
+
 "######################################################
 "# SHELL
 "######################################################
 augroup sh
-    "" compila e abre evince ou somente compila
     au FileType sh nmap <leader>r <Esc>:w<CR>:!clear;chmod +x % ; ./%<CR>
 augroup END
 
 "######################################################
-"# TEX
+"# LATEX
 "######################################################
 augroup tex
-    "" compila e abre evince ou somente compila
+    " comenta
+    au FileType tex vnoremap // :call ComentaVisual("% ")<CR>
+    au FileType tex vnoremap ;; :call DescomentaVisual("% ")<CR>
+    au FileType tex nmap // :call ComentaNormal("% ")<esc>
+    au FileType tex nmap ;; :call DescomentaNormal("% ")<CR>
+
+    "" compila e abre evince
     au FileType tex nmap <leader>r <Esc>:w<CR>:!clear;pdflatex %<CR><CR>
     au FileType tex nmap <leader>e <Esc>:w<CR>:!clear;evince '%:r'.pdf &<CR><CR>
-    au FileType tex inoremap { {}<left>
+
+    au FileType tex inoremap { {}<left><left><left><left><left>
 augroup END
+
+" Reconhecer classes com syntax de latex
+au BufNewFile,BufRead *.cls set filetype=tex
 
 "######################################################
 "# GO
 "######################################################
-function ComentaVisual()
-    execute "normal! I// "
-endfunction
 
 augroup go
     " comenta
-    au FileType go vnoremap ;; :s/\/\/ /<cr>:noh<CR>
-    au FileType go vnoremap // :call ComentaVisual()<CR>
-    au FileType go nmap ;; :s/\/\/ /<cr>:noh<CR>==
-    au FileType go nmap // I// <esc>
+    au FileType go vnoremap // :call ComentaVisual("// ")<CR>
+    au FileType go vnoremap ;; :call DescomentaVisual("\/\/ ")<CR>
+    au FileType go nmap // :call ComentaNormal("// ")<esc>
+    au FileType go nmap ;; :call DescomentaNormal("\/\/ ")<CR>
 
     " executa
     au FileType go nmap <leader>r <Plug>(go-run)
