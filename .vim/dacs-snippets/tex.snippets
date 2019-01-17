@@ -1,11 +1,11 @@
 #texdoc clsguide
 
-snippet \use
+snippet use
 \usepackage${1:[${2}]}{${0:${VISUAL}}}
 <,,<
 endsnippet
 
-snippet \doc
+snippet doc
 \documentclass{${1:article}}
 <,,<
 \begin{document}
@@ -13,52 +13,80 @@ ${0:${VISUAL:% boraa}}
 \end{document}
 endsnippet
 
-snippet \docb
-\documentclass{beamer}
+# lista de itens
+snippet bf
+\begin{frame}
+\frametitle{$1}
+	${0:${VISUAL}}
+\end{frame}
+<,,<
+endsnippet
+
+# lista de itens
+snippet bi
+\begin{${1:itemize}}
+	\item ${0:${VISUAL: content}}
+\end{$1}
+<,,<
+endsnippet
+
+# begin/end
+snippet b
+\begin{${1:center}}
+ ${0:${VISUAL: content}}
+\end{$1}
+<,,<
+endsnippet
+
+snippet db
+\documentclass[16pt]{beamer}
+% \usetheme{Warsaw} % https://hartwork.org/beamer-theme-matrix/
 \usepackage[utf8]{inputenc}
 \usepackage[portuguese]{babel}
 \usepackage{hyperref}
 \usepackage{xcolor}
+\usepackage{fontawesome} % https://ctan.org/pkg/fontawesome
 
-\title{${1:{\LaTeX}}}
-\author{${2:Felipe Silva}}
+% definir deafultcolor pela cor padrão
+\AtBeginDocument{\colorlet{defaultcolor}{.}}
+
+% link colorido
+\newcommand{\link}[2]{\color{violet}\href{#1}{#2}\color{defaultcolor}}
+
+% desenho da tela de titulo
+\defbeamertemplate*{title page}{customized}[1][]
+{
+    \begin{center}
+        \usebeamerfont{title}\inserttitle\par
+        \usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par    
+    \end{center}
+
+    \bigskip
+
+    \usebeamerfont{author}\insertauthor\par
+    \footnotesize\link{http://www.dacs.work}{dacs.work}\par
+    \link{http://www.github.com/felipedacs}{\faGithub}\ 
+    \link{http://www.gitlab.com/felipedacs}{\faGitlab}\
+    \link{http://www.linkedin.com/in/felipedacs}{\faLinkedin}\
+    \link{http://www.slideshare.net/felipedacs}{\faSlideshare}\
+    ://felipedacs
+
+    \begin{flushright}
+        \insertdate\par
+    \end{flushright}
+}
+\title{$1}
+\subtitle{$2}
+\author{${3:Felipe Silva}}
+\date{${4:\today}}
+
 
 \begin{document}
 \maketitle
-
 \begin{frame}
-    \frametitle{Onde me encontrar}
-    \begin{itemize}
-        \item \link{http://www.dacs.work}{dacs.work}
-        \item \link{http://www.github.com/felipedacs}{github://felipedacs}
-        \item \link{http://www.gitlab.com/felipedacs}{gitlab://felipedacs}
-        \item \link{http://www.linkedin.com/in/felipedacs}{linkedin://felipedacs}
-        \item \link{http://www.slideshare.net/felipedacs}{slideshare://felipedacs}
-    \end{itemize}
-\end{frame}
-
-\begin{frame}
-\frametitle{${3:titulo do slide}}
-${0:${VISUAL:% content}}
+    \frametitle{$5}
+	${6:${VISUAL}}
 \end{frame}
 <,,<
 \end{document}
-endsnippet
-
-
-# lista de itens
-snippet \begf
-\begin{frame}
-\frametitle{${1:titulo do slide}}
-${0:${VISUAL:% content}}
-\end{$1}
-<,,<
-endsnippet
-
-# lista de itens
-snippet \begi
-\begin{${1:itemize}}
-\item ${0:${VISUAL: content}}
-\end{$1}
-<,,<
 endsnippet

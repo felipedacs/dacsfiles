@@ -122,7 +122,7 @@ inoremap <leader><leader> <ESC>/<,,<<CR>v/<<CR>c
 " melhorar o <left><left>...... !!!!!
 inoremap ¢ ()<,,<<left><left><left><left><left>
 inoremap ( ()<,,<<left><left><left><left><left>
-inoremap { {}<,,<<left><left><left><left><left><cr><cr><up><tab>
+inoremap { {}<,,<<left><left><left><left><left>
 inoremap [ []<,,<<left><left><left><left><left>
 inoremap " ""<,,<<left><left><left><left><left>
 inoremap ' ''<,,<<left><left><left><left><left>
@@ -268,8 +268,6 @@ augroup tex
     "" compila e abre evince
     au FileType tex nmap <leader>r <Esc>:w<CR>:!clear;pdflatex %<CR><CR>
     au FileType tex nmap <leader>e <Esc>:w<CR>:!clear;evince '%:r'.pdf &<CR><CR>
-
-    au FileType tex inoremap { {}<left><left><left><left><left>
 augroup END
 
 " Reconhecer classes com syntax de latex
