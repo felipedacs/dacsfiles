@@ -239,12 +239,13 @@ function DescomentaVisual(carac)
 endfunction
 
 "######################################################
-"# SHELL
+"# MARKDOWN
 "######################################################
 augroup markdown
-    "" compila e abre evince
+    " compila,  abre evince e deleta pdf
     au FileType markdown nmap <leader>r <Esc>:w<CR>:!clear;pandoc % -o '%:r'.pdf<CR><CR>
     au FileType markdown nmap <leader>e <Esc>:w<CR>:!clear;evince '%:r'.pdf &<CR><CR>
+    au FileType markdown nmap <leader>d <Esc>:w<CR>:!clear;rm '%:r'.pdf &<CR><CR>
 augroup END
 
 "######################################################

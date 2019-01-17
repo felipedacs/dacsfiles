@@ -1,1 +1,64 @@
 #texdoc clsguide
+
+snippet \use
+\usepackage${1:[${2}]}{${0:${VISUAL}}}
+<,,<
+endsnippet
+
+snippet \doc
+\documentclass{${1:article}}
+<,,<
+\begin{document}
+${0:${VISUAL:% boraa}}
+\end{document}
+endsnippet
+
+snippet \docb
+\documentclass{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage[portuguese]{babel}
+\usepackage{hyperref}
+\usepackage{xcolor}
+
+\title{${1:{\LaTeX}}}
+\author{${2:Felipe Silva}}
+
+\begin{document}
+\maketitle
+
+\begin{frame}
+    \frametitle{Onde me encontrar}
+    \begin{itemize}
+        \item \link{http://www.dacs.work}{dacs.work}
+        \item \link{http://www.github.com/felipedacs}{github://felipedacs}
+        \item \link{http://www.gitlab.com/felipedacs}{gitlab://felipedacs}
+        \item \link{http://www.linkedin.com/in/felipedacs}{linkedin://felipedacs}
+        \item \link{http://www.slideshare.net/felipedacs}{slideshare://felipedacs}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{${3:titulo do slide}}
+${0:${VISUAL:% content}}
+\end{frame}
+<,,<
+\end{document}
+endsnippet
+
+
+# lista de itens
+snippet \begf
+\begin{frame}
+\frametitle{${1:titulo do slide}}
+${0:${VISUAL:% content}}
+\end{$1}
+<,,<
+endsnippet
+
+# lista de itens
+snippet \begi
+\begin{${1:itemize}}
+\item ${0:${VISUAL: content}}
+\end{$1}
+<,,<
+endsnippet

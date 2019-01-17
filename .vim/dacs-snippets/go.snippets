@@ -62,12 +62,6 @@ type ${1:Interface} interface {
 }
 endsnippet
 
-# if
-snippet if
-if ${1:condition} {
-	${0:${VISUAL}}
-}
-endsnippet
 
 snippet switch
 switch ${1:expression} {
@@ -88,9 +82,18 @@ snippet :
 ${1:name} := ${0:value}
 endsnippet
 
+# if
+snippet if
+if ${1:condition} {
+	${0:${VISUAL}}
+}
+<,,<
+endsnippet
+
 # teste de erro padrão
-snippet iferr
+snippet if "if err != nil" "re.match('^\s+[^=]*err\s*:?=', snip.buffer[snip.line-1])" be
 if err != nil {
 	${0:${VISUAL}}
 }
+<,,<
 endsnippet
