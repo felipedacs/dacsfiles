@@ -104,7 +104,7 @@ set number                  " numero das linhas
 set autoread                " vim checar quando o texto for modificado
 set showmatch               "mostra fechamento de {['']}
 set ai                      "auto indentação -> ==
-set cursorline              " marcação da linha de onde está o cursor
+"set cursorline              " marcação da linha de onde está o cursor
 set mouse=a                 "libera uso do mouse em todos modos
 
 " Search mappings: These will make it so that going to the next one in a
