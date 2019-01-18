@@ -117,6 +117,7 @@ nnoremap N Nzzzv
 "*****************************************************************************
 noremap <leader><leader> <ESC>/<,,<<CR>v/<<CR>c
 inoremap <leader><leader> <ESC>/<,,<<CR>v/<<CR>c
+inoremap ,< <,,<
 
 " fechar automaticamente
 " melhorar o <left><left>...... !!!!!
@@ -223,19 +224,8 @@ function ComentaNormal(carac)
     echo a:carac
 endfunction
 
-function DescomentaNormal(carac)
-    execute ":s/".a:carac."/"
-    execute ":noh"
-    execute "normal! =="
-endfunction
-
 function ComentaVisual(carac)
     execute "normal! I".a:carac
-endfunction
-
-function DescomentaVisual(carac)
-    execute ":s/".a:carac."/"
-    execute ":noh"
 endfunction
 
 "######################################################
@@ -261,9 +251,9 @@ augroup END
 augroup tex
     " comenta
     au FileType tex vnoremap // :call ComentaVisual("% ")<CR>
-    au FileType tex vnoremap ;; :call DescomentaVisual("% ")<CR>
+    au FileType tex vnoremap ;; :s/%\s/<CR>:noh<CR>
     au FileType tex nmap // :call ComentaNormal("% ")<esc>
-    au FileType tex nmap ;; :call DescomentaNormal("% ")<CR>
+    au FileType tex nmap ;; :s/%\s/<CR>:noh<CR>
 
     "" compila e abre evince
     au FileType tex nmap <leader>r <Esc>:w<CR>:!clear;pdflatex %<CR><CR>
@@ -280,9 +270,9 @@ au BufNewFile,BufRead *.cls set filetype=tex
 augroup go
     " comenta
     au FileType go vnoremap // :call ComentaVisual("// ")<CR>
-    au FileType go vnoremap ;; :call DescomentaVisual("\/\/ ")<CR>
+    au FileType go vnoremap ;; :s/\/\/\s/<CR>:noh<CR>
     au FileType go nmap // :call ComentaNormal("// ")<esc>
-    au FileType go nmap ;; :call DescomentaNormal("\/\/ ")<CR>
+    au FileType go nmap ;; :s/\/\/\s/<CR>:noh<CR>
 
     " executa
     au FileType go nmap <leader>r <Plug>(go-run)
