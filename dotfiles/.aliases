@@ -13,6 +13,7 @@ alias ...='cd ../..'
 alias ....='cd ../../..'
 
 # GIT
+alias gi="git init;wget -q https://unlicense.org/UNLICENSE;echo 'readme.pdf'>.gitignore;echo '# ${PWD##*/}'>readme.md"
 alias ga="git add ."
 alias gc="git commit"
 alias gps='git push origin master'

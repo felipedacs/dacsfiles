@@ -73,6 +73,8 @@ linkandoDotfiles(){
     ln -v -s -f $(pwd)/dotfiles/.aliases $HOME/.aliases
     ln -v -s -f $(pwd)/dotfiles/.scripts $HOME/.scripts
 
+    ln -v -s -f $(pwd)/dotfiles/.gitconfig $HOME/.gitconfig
+
     ln -v -s -f $(pwd)/dotfiles/.vimrc $HOME/.vimrc
     ln -v -s -f $(pwd)/.vim/dacs-snippets $HOME/.vim
 
