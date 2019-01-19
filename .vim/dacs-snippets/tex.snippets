@@ -1,4 +1,17 @@
 #texdoc clsguide
+#texdoc tds
+
+snippet s
+\section{$1}
+endsnippet
+
+snippet ss
+\subsection{$1}
+endsnippet
+
+snippet sss
+\subsection{$1}
+endsnippet
 
 snippet use
 \usepackage${1:[${2}]}{${0:${VISUAL}}}
@@ -44,53 +57,50 @@ snippet b
 endsnippet
 
 snippet db
-\documentclass[16pt]{beamer}
-% \usetheme{Warsaw} % https://hartwork.org/beamer-theme-matrix/
+\documentclass[17pt]{beamer}
+\usetheme{Goettingen} % https://hartwork.org/beamer-theme-matrix/
 \usepackage[utf8]{inputenc}
 \usepackage[portuguese]{babel}
 \usepackage{hyperref}
-\usepackage{xcolor}
 \usepackage{fontawesome} % https://ctan.org/pkg/fontawesome
 
-% definir deafultcolor pela cor padrão
-\AtBeginDocument{\colorlet{defaultcolor}{.}}
-
 % link colorido
-\newcommand{\link}[2]{\color{violet}\href{#1}{#2}\color{defaultcolor}}
+\newcommand{\link}[2]{\textcolor{violet}{\href{#1}{#2}}}
 
-% desenho da tela de titulo
-\defbeamertemplate*{title page}{customized}[1][]
-{
-    \begin{center}
-        \usebeamerfont{title}\inserttitle\par
-        \usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par    
-    \end{center}
-
-    \bigskip
-
-    \usebeamerfont{author}\insertauthor\par
-    \footnotesize\link{http://www.dacs.work}{dacs.work}\par
-    \link{http://www.github.com/felipedacs}{\faGithub}\ 
-    \link{http://www.gitlab.com/felipedacs}{\faGitlab}\
-    \link{http://www.linkedin.com/in/felipedacs}{\faLinkedin}\
-    \link{http://www.slideshare.net/felipedacs}{\faSlideshare}\
-    ://felipedacs
-
-    \begin{flushright}
-        \insertdate\par
-    \end{flushright}
+% numero atual/total de slides
+% créditos: https://tex.stackexchange.com/questions/137022/how-to-insert-page-number-in-beamer-navigation-symbols
+\addtobeamertemplate{navigation symbols}{}{%
+    \usebeamerfont{footline}%
+    \usebeamercolor[fg]{footline}%
+    \hspace{1em}%
+    \insertframenumber/\inserttotalframenumber
 }
+
 \title{$1}
 \subtitle{$2}
 \author{${3:Felipe Silva}}
 \date{${4:\today}}
 
-
+%%%%%%%%%%% NA PRIMEIRA VEZ QUE FOR COMPILAR
+%%%%%%%%%%% PRECISA SER FEITO DUAS VEZES
+%%%%%%%%%%% SOMENTE ASSIM AS SEÇÕES SERÃO MAPEADAS!!!!!!!!!
 \begin{document}
-\maketitle
+
 \begin{frame}
-    \frametitle{$5}
-	${6:${VISUAL}}
+    \frametitle{}
+    \maketitle
+    \link{http://www.dacs.work}{dacs.work}\\\
+    \link{http://www.github.com/felipedacs}{\faGithub}\ 
+    \link{http://www.gitlab.com/felipedacs}{\faGitlab}\
+    \link{http://www.linkedin.com/in/felipedacs}{\faLinkedin}\
+    \link{http://www.slideshare.net/felipedacs}{\faSlideshare}\
+    ://felipedacs\hfill 
+\end{frame}
+
+\section{$5}
+\begin{frame}
+    \frametitle{$6}
+	${7:${VISUAL}}
 \end{frame}
 <,,<
 \end{document}
