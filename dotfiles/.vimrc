@@ -36,6 +36,8 @@ call plug#begin(expand('~/.vim/plugged'))
 "instalar ctags: sudo apt-get install exuberant-ctags
 Plug 'majutsushi/tagbar'
 
+Plug 'tpope/vim-fugitive'        " Comandos git no vim
+Plug 'gregsexton/gitv', {'on': ['Gitv']}
 Plug 'airblade/vim-gitgutter'    " Marcações + - _ ~ de git
 Plug 'SirVer/ultisnips'          " engine de snippets
 Plug 'w0rp/ale'                  " Lint geral do vim
@@ -120,7 +122,8 @@ inoremap <leader><leader> <ESC>/<,,<<CR>v/<<CR>c
 inoremap ,< <,,<
 
 " fechar automaticamente
-" melhorar o <left><left>...... !!!!!
+" melhorar o <left><left>......, vimrc não reconhece comando de leader para <,,<
+" muito cansativo usar a regra de quebrar linha no {} e rever em outros para não fazer
 inoremap ¢ ()<,,<<left><left><left><left><left>
 inoremap ( ()<,,<<left><left><left><left><left>
 inoremap { {}<,,<<left><left><left><left><left>
@@ -232,7 +235,7 @@ endfunction
 "# MARKDOWN
 "######################################################
 augroup markdown
-    " compila,  abre evince e deleta pdf
+    " compila, abre evince e deleta pdf
     au FileType markdown nmap <leader>r <Esc>:w<CR>:!clear;pandoc % -o '%:r'.pdf<CR><CR>
     au FileType markdown nmap <leader>e <Esc>:w<CR>:!clear;evince '%:r'.pdf &<CR><CR>
     au FileType markdown nmap <leader>d <Esc>:w<CR>:!clear;rm '%:r'.pdf &<CR><CR>
@@ -255,8 +258,11 @@ augroup tex
     au FileType tex nmap // :call ComentaNormal("% ")<esc>
     au FileType tex nmap ;; :s/%\s/<CR>:noh<CR>
 
-    "" compila e abre evince
-    au FileType tex nmap <leader>r <Esc>:w<CR>:!clear;pdflatex %<CR><CR>
+    " compila duas vezes para pdf
+    " é necessário compilar duas vezes para ter certeza de atualizar a toc
+    " https://tex.stackexchange.com/questions/301103/empty-table-of-contents
+    au FileType tex nmap <leader>r <Esc>:w<CR>:!clear;pdflatex %<CR><CR>:!clear;pdflatex %<CR><CR>
+    " abre evince
     au FileType tex nmap <leader>e <Esc>:w<CR>:!clear;evince '%:r'.pdf &<CR><CR>
 augroup END
 
@@ -356,8 +362,6 @@ autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4
 "######################################################
 "# UltiSnips
 "######################################################
-au FileType snippets inoremap { {}<left>
-
 let g:UltiSnipsExpandTrigger = "<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<c-b>"
@@ -376,8 +380,13 @@ map <bs> :Tagbar<cr>
 "######################################################
 "# Gitgutter
 "######################################################
-" [c -> previous hunk   ]c -> next hunk
-" set updatetime=100 "atualização mais rápida de +-
+" [c -> previous chunk   ]c -> next chunk
+" <leader>hp -> mostra valor anterior do hunk
+" <leader>hs -> stage["git add line"] modificação, removendo chunk
+" <leader>hu -> desfaz modificação não staged no chunk
+set updatetime=100 "atualização mais rápida
+
+":GitGutterEnable
 let g:gitgutter_enabled=0
 
 "######################################################
