@@ -25,7 +25,6 @@
     changed = yellow bold
     untracked = red bold
 [alias]
-    open = xdg-open $(git config --get remote.origin.url)
     a = add --all
     ai = add -i
     #############

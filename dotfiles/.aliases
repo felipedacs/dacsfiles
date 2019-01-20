@@ -19,6 +19,7 @@ alias gc="git commit"
 alias gps='git push origin master'
 alias gfr='git fetch --all ; git reset --hard origin/master'
 alias gs='git status'
+alias gop='xdg-open $(git config --get remote.origin.url)'
 
 # LS
 alias ll='ls -alF'
