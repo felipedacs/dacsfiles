@@ -36,10 +36,10 @@ snippet f
 endsnippet
 
 # lista de itens
-snippet bi
-\begin{${1:itemize}}
+snippet it
+\itemize{
 	\item ${0:${VISUAL: content}}
-\end{$1}
+}
 <,,<
 endsnippet
 
@@ -53,6 +53,17 @@ snippet b
 \begin{${1:center}}
  ${0:${VISUAL: content}}
 \end{$1}
+<,,<
+endsnippet
+
+# figuca com pacote graphicx
+snippet fi
+\begin{figure}[!htb]
+\center{
+        \includegraphics[width=2cm]
+        {${0:${VISUAL: img}}}
+    }
+\end{figure}
 <,,<
 endsnippet
 
@@ -71,12 +82,12 @@ snippet db
 \usepackage[utf8]{inputenc}
 \usepackage[portuguese]{babel}
 \usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage[backend=bibtex]{biblatex} % bibliotegrafia
 \usepackage{fontawesome} % https://ctan.org/pkg/fontawesome
-\usepackage[style=authoryear]{biblatex}
 \usepackage{tikz} % usado na progress bar
 \usetikzlibrary{calc} % usado na progress bar
 \usepackage{filecontents} % inserir em outros arquivos
-\usepackage[backend=bibtex]{biblatex} % bibliotegrafia
 
 % the progress bar
 % https://tex.stackexchange.com/questions/59742/progress-bar-for-latex-beamer
