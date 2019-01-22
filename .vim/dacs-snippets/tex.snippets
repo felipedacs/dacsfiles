@@ -27,11 +27,11 @@ ${0:${VISUAL:% boraa}}
 endsnippet
 
 # lista de itens
-snippet bf
-\begin{frame}
-\frametitle{$1}
+snippet f
+\frame{
+	{$1}
 	${0:${VISUAL}}
-\end{frame}
+}
 <,,<
 endsnippet
 
@@ -56,25 +56,161 @@ snippet b
 <,,<
 endsnippet
 
+# begin/end
+snippet @
+@$1{$2,
+    author		= {$3},
+	title		= {$4},
+	date		= {${0:${VISUAL}}},
+}
+<,,<
+endsnippet
+
 snippet db
 \documentclass[17pt]{beamer}
-\usetheme{Goettingen} % https://hartwork.org/beamer-theme-matrix/
 \usepackage[utf8]{inputenc}
 \usepackage[portuguese]{babel}
 \usepackage{hyperref}
 \usepackage{fontawesome} % https://ctan.org/pkg/fontawesome
+\usepackage[style=authoryear]{biblatex}
+\usepackage{tikz} % usado na progress bar
+\usetikzlibrary{calc} % usado na progress bar
+\usepackage{filecontents} % inserir em outros arquivos
+\usepackage[backend=bibtex]{biblatex} % bibliotegrafia
+
+% the progress bar
+% https://tex.stackexchange.com/questions/59742/progress-bar-for-latex-beamer
+\definecolor{pbblue}{HTML}{0A75A8}% filling color for the progress bar
+\definecolor{pbgray}{HTML}{575757}% background color for the progress bar
+\makeatletter
+\def\progressbar@progressbar{} % the progress bar
+\newcount\progressbar@tmpcounta% auxiliary counter
+\newcount\progressbar@tmpcountb% auxiliary counter
+\newdimen\progressbar@pbht %progressbar height
+\newdimen\progressbar@pbwd %progressbar width
+\newdimen\progressbar@tmpdim % auxiliary dimension
+\progressbar@pbwd=\linewidth
+\progressbar@pbht=0.5ex
+\def\progressbar@progressbar{
+    \progressbar@tmpcounta=\insertframenumber
+    \progressbar@tmpcountb=\inserttotalframenumber
+    \progressbar@tmpdim=\progressbar@pbwd
+    \multiply\progressbar@tmpdim by \progressbar@tmpcounta
+    \divide\progressbar@tmpdim by \progressbar@tmpcountb
+    \begin{tikzpicture}[rounded corners=2pt,very thin]
+        \shade[top color=pbgray!20,bottom color=pbgray!20,middle color=pbgray!30]
+        (0pt, 0pt) rectangle ++ (\progressbar@pbwd, \progressbar@pbht);
+        \shade[draw=pbblue,top color=pbblue!50,bottom color=pbblue!50,middle color=pbblue] %
+        (0pt, 0pt) rectangle ++ (\progressbar@tmpdim, \progressbar@pbht);
+    \end{tikzpicture}%
+}
 
 % link colorido
 \newcommand{\link}[2]{\textcolor{violet}{\href{#1}{#2}}}
 
-% numero atual/total de slides
-% créditos: https://tex.stackexchange.com/questions/137022/how-to-insert-page-number-in-beamer-navigation-symbols
-\addtobeamertemplate{navigation symbols}{}{%
-    \usebeamerfont{footline}%
-    \usebeamercolor[fg]{footline}%
-    \hspace{1em}%
-    \insertframenumber/\inserttotalframenumber
+\setbeamertemplate{headline}
+{
+    \vspace{1ex}
+    \usebeamerfont{headline}\usebeamercolor[fg]{headline}
+    \hfill
+    \vspace{1ex}
+    \textit{\insertsection}
+    \hspace*{1ex}
+
+    \hfill
+    \textit{\insertsubsection}
+    \hspace*{1ex}
 }
+
+\setbeamertemplate{navigation symbols}{} % remove navigation symbols
+\setbeamertemplate{footline}
+{
+
+    \begin{beamercolorbox}[wd=\paperwidth,ht=4ex,center,dp=1ex]{white}
+        \hspace*{1ex}
+        \usebeamerfont{footline}\usebeamercolor[fg]{footline}
+        \hyperlink{indice}{\faMapSigns}
+        \progressbar@progressbar%
+        \hfill
+        \insertframenumber/\inserttotalframenumber
+        \hspace*{1ex}
+        \vspace{1ex}
+    \end{beamercolorbox}%
+}
+\setbeamertemplate{bibliography item}{\insertbiblabel}
+
+\AtBeginDocument{
+    {
+        \setbeamertemplate{headline}{}
+        \setbeamertemplate{footline}{}
+        \frame{
+            \maketitle
+            \small
+            \link{http://www.github.com/felipedacs}{\faGithub}\ 
+            \link{http://www.gitlab.com/felipedacs}{\faGitlab}\
+            \link{http://www.linkedin.com/in/felipedacs}{\faLinkedin}\
+            \link{http://www.slideshare.net/felipedacs}{\faSlideshare}\
+            ://felipedacs
+            \hfill 
+            \link{http://www.dacs.work}{dacs.work}
+        }
+
+    }
+}
+
+\AtBeginSection{
+    {
+        \setbeamertemplate{headline}{}
+        \frame{
+            {\hfill\faMapO}
+
+            \tableofcontents[sectionstyle=show/hide,
+            subsectionstyle=shaded/shaded/hide
+            ]
+        }
+    }
+}
+
+\AtBeginSubsection{
+    {
+        \setbeamertemplate{headline}{}
+        \frame{
+            {\hfill\faMapMarker}
+            \tableofcontents[
+            sectionstyle=shaded/hide,
+            subsectionstyle=show/shaded/hide
+            ]
+        }
+    }
+}
+
+\AtEndDocument{
+
+    
+    {
+        \setbeamertemplate{headline}{}
+        \setbeamertemplate{footline}
+		\section{Conclusão}
+        {\hspace*{1ex}\hyperlink{indice}{\faMapSigns}\vspace{1ex}} 
+        \frame{
+            \textit{that's all}
+        }
+		\section{References}
+		\begin{frame}[t,allowframebreaks]
+    		\nocite{*}
+    		\printbibliography
+		\end{frame}
+    }
+}
+
+\begin{filecontents}{abc.bib}
+% página 8 da documentação biblatex
+% article: author, title, journaltitle, year/date
+% online: author/editor, title, year/date, url
+% misc: author/editor, title, year/date
+% iguais ao misc: image, music, movie, video, software
+\end{filecontents}
+\addbibresource{abc.bib}
 
 \title{$1}
 \subtitle{$2}
@@ -83,25 +219,20 @@ snippet db
 
 \begin{document}
 
-\begin{frame}
-    \frametitle{}
-    \maketitle
-    \small
-    \link{http://www.github.com/felipedacs}{\faGithub}\ 
-    \link{http://www.gitlab.com/felipedacs}{\faGitlab}\
-    \link{http://www.linkedin.com/in/felipedacs}{\faLinkedin}\
-    \link{http://www.slideshare.net/felipedacs}{\faSlideshare}\
-    ://felipedacs
-    \hfill 
-    \link{http://www.dacs.work}{dacs.work}
-\end{frame}
-
+\frame[allowframebreaks]{
+    {Overview}
+    \label{indice}
+    % \tableofcontents[sections={1-5}]
+    % \framebreak
+    % \tableofcontents[sections={6-10}]
+    \tableofcontents[sections={*}]
+}
 
 \section{$5}
-\begin{frame}
-    \frametitle{$6}
+\frame{
+    {$6}
 	${0:${VISUAL}}
-\end{frame}
+}
 <,,<
 \end{document}
 endsnippet

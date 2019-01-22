@@ -117,8 +117,8 @@ nnoremap N Nzzzv
 "*****************************************************************************
 "" Abbreviations
 "*****************************************************************************
-noremap <leader><leader> <ESC>/<,,<<CR>v/<<CR>c
-inoremap <leader><leader> <ESC>/<,,<<CR>v/<<CR>c
+noremap <leader><leader> <ESC>/<,,<<CR>v/<<CR>c<ESC>:noh<CR>a
+inoremap <leader><leader> <ESC>/<,,<<CR>v/<<CR>c<ESC>:noh<CR>a
 inoremap ,< <,,<
 
 " fechar automaticamente
@@ -261,7 +261,11 @@ augroup tex
     " compila duas vezes para pdf
     " é necessário compilar duas vezes para ter certeza de atualizar a toc
     " https://tex.stackexchange.com/questions/301103/empty-table-of-contents
-    au FileType tex nmap <leader>r <Esc>:w<CR>:!clear;pdflatex %<CR><CR>:!clear;pdflatex %<CR><CR>
+    " au FileType tex nmap <leader>r <Esc>:w<CR>:!clear;pdflatex %<CR><CR>:!clear;pdflatex %<CR><CR>
+    au FileType tex nmap <leader>r <Esc>:w<CR>:!clear;pdflatex %<CR><CR>:!clear;pdflatex %<CR><CR>:!clear;bibtex '%:r'.aux<CR><CR>:!clear;pdflatex %<CR><CR>:!clear;pdflatex %<CR><CR>
+
+    " compila, gera bibliografia e compila novamente
+    au FileType tex nmap <leader>b <Esc>:w<CR>:!clear;bibtex '%:r'.aux<CR><CR>
     " abre evince
     au FileType tex nmap <leader>e <Esc>:w<CR>:!clear;evince '%:r'.pdf &<CR><CR>
 augroup END
@@ -388,6 +392,7 @@ set updatetime=100 "atualização mais rápida
 
 ":GitGutterEnable
 let g:gitgutter_enabled=0
+noremap <leader>c :GitGutterToggle<CR>
 
 "######################################################
 "# Ale
