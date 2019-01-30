@@ -15,12 +15,12 @@ endsnippet
 
 snippet use
 \usepackage${1:[${2}]}{${0:${VISUAL}}}
-<,,<
+{%%}
 endsnippet
 
 snippet doc
 \documentclass{${1:article}}
-<,,<
+{%%}
 \begin{document}
 ${0:${VISUAL:% boraa}}
 \end{document}
@@ -32,15 +32,15 @@ snippet f
 	{$1}
 	${0:${VISUAL}}
 }
-<,,<
+{%%}
 endsnippet
 
 # lista de itens
 snippet it
-\itemize{
-	\item ${0:${VISUAL: content}}
-}
-<,,<
+\begin{itemize}
+	\item $0
+\end{itemize}
+{%%}
 endsnippet
 
 # item de lista
@@ -53,7 +53,7 @@ snippet b
 \begin{${1:center}}
  ${0:${VISUAL: content}}
 \end{$1}
-<,,<
+{%%}
 endsnippet
 
 # figuca com pacote graphicx
@@ -64,7 +64,7 @@ snippet fi
         {${0:${VISUAL: img}}}
     }
 \end{figure}
-<,,<
+{%%}
 endsnippet
 
 # begin/end
@@ -74,7 +74,7 @@ snippet @
 	title		= {$4},
 	date		= {${0:${VISUAL}}},
 }
-<,,<
+{%%}
 endsnippet
 
 snippet db
@@ -85,75 +85,23 @@ snippet db
 \usepackage{graphicx}
 \usepackage[backend=bibtex]{biblatex} % bibliotegrafia
 \usepackage{fontawesome} % https://ctan.org/pkg/fontawesome
-\usepackage{tikz} % usado na progress bar
-\usetikzlibrary{calc} % usado na progress bar
 \usepackage{filecontents} % inserir em outros arquivos
 
-% the progress bar
-% https://tex.stackexchange.com/questions/59742/progress-bar-for-latex-beamer
-\definecolor{pbblue}{HTML}{0A75A8}% filling color for the progress bar
-\definecolor{pbgray}{HTML}{575757}% background color for the progress bar
-\makeatletter
-\def\progressbar@progressbar{} % the progress bar
-\newcount\progressbar@tmpcounta% auxiliary counter
-\newcount\progressbar@tmpcountb% auxiliary counter
-\newdimen\progressbar@pbht %progressbar height
-\newdimen\progressbar@pbwd %progressbar width
-\newdimen\progressbar@tmpdim % auxiliary dimension
-\progressbar@pbwd=\linewidth
-\progressbar@pbht=0.5ex
-\def\progressbar@progressbar{
-    \progressbar@tmpcounta=\insertframenumber
-    \progressbar@tmpcountb=\inserttotalframenumber
-    \progressbar@tmpdim=\progressbar@pbwd
-    \multiply\progressbar@tmpdim by \progressbar@tmpcounta
-    \divide\progressbar@tmpdim by \progressbar@tmpcountb
-    \begin{tikzpicture}[rounded corners=2pt,very thin]
-        \shade[top color=pbgray!20,bottom color=pbgray!20,middle color=pbgray!30]
-        (0pt, 0pt) rectangle ++ (\progressbar@pbwd, \progressbar@pbht);
-        \shade[draw=pbblue,top color=pbblue!50,bottom color=pbblue!50,middle color=pbblue] %
-        (0pt, 0pt) rectangle ++ (\progressbar@tmpdim, \progressbar@pbht);
-    \end{tikzpicture}%
+\newcommand{\link}[2]{\textcolor{violet}{\href{#1}{#2}}} % link colorido
+\setbeamertemplate{headline}{
+    \vspace{1ex}\hfill\textit{\insertsection}\hspace*{1ex}\newline
+    \vspace{1ex}\hfill\textit{\insertsubsection}\hspace*{1ex}
 }
-
-% link colorido
-\newcommand{\link}[2]{\textcolor{violet}{\href{#1}{#2}}}
-
-\setbeamertemplate{headline}
-{
-    \vspace{1ex}
-    \usebeamerfont{headline}\usebeamercolor[fg]{headline}
-    \hfill
-    \vspace{1ex}
-    \textit{\insertsection}
-    \hspace*{1ex}
-
-    \hfill
-    \textit{\insertsubsection}
-    \hspace*{1ex}
-}
-
 \setbeamertemplate{navigation symbols}{} % remove navigation symbols
-\setbeamertemplate{footline}
-{
-
+\setbeamertemplate{footline}{
     \begin{beamercolorbox}[wd=\paperwidth,ht=4ex,center,dp=1ex]{white}
-        \hspace*{1ex}
-        \usebeamerfont{footline}\usebeamercolor[fg]{footline}
-        \hyperlink{indice}{\faMapSigns}
-        \progressbar@progressbar%
-        \hfill
-        \insertframenumber/\inserttotalframenumber
-        \hspace*{1ex}
-        \vspace{1ex}
+        \hyperlink{indice}{\insertframenumber/\inserttotalframenumber}
     \end{beamercolorbox}%
 }
 \setbeamertemplate{bibliography item}{\insertbiblabel}
-
 \AtBeginDocument{
     {
-        \setbeamertemplate{headline}{}
-        \setbeamertemplate{footline}{}
+        \setbeamertemplate{headline}{}\setbeamertemplate{footline}{}
         \frame{
             \maketitle
             \small
@@ -165,55 +113,31 @@ snippet db
             \hfill 
             \link{http://www.dacs.work}{dacs.work}
         }
-
     }
 }
-
-\AtBeginSection{
+\AtBeginSection[]{
     {
-        \setbeamertemplate{headline}{}
-        \frame{
-            {\hfill\faMapO}
-
-            \tableofcontents[sectionstyle=show/hide,
-            subsectionstyle=shaded/shaded/hide
-            ]
-        }
+        \setbeamertemplate{headline}{} % retira section/subsection
+        \frame{{\hfill\faMapO}\tableofcontents[sectionstyle=show/hide,subsectionstyle=shaded/shaded/hide]}
     }
 }
-
-\AtBeginSubsection{
+\AtBeginSubsection[]{
     {
-        \setbeamertemplate{headline}{}
-        \frame{
-            {\hfill\faMapMarker}
-            \tableofcontents[
-            sectionstyle=shaded/hide,
-            subsectionstyle=show/shaded/hide
-            ]
-        }
+        \setbeamertemplate{headline}{} % retira section/subsection
+        \frame{{\hfill\faMapMarker}\tableofcontents[sectionstyle=shaded/hide,subsectionstyle=show/shaded/hide]}
     }
 }
-
 \AtEndDocument{
-
-    
     {
-        \setbeamertemplate{headline}{}
-        \setbeamertemplate{footline}
-		\section{Conclusão}
-        {\hspace*{1ex}\hyperlink{indice}{\faMapSigns}\vspace{1ex}} 
-        \frame{
-            \textit{that's all}
-        }
-		\section{References}
-		\begin{frame}[t,allowframebreaks]
-    		\nocite{*}
-    		\printbibliography
-		\end{frame}
+        \setbeamertemplate{headline}{}\setbeamertemplate{footline}{} % retira section/subsection
+        \frame{{That's all}Muito Obrigado!}
+        \frame[t]{\nocite{*}\printbibliography}
     }
 }
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%% Corpo %%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{filecontents}{abc.bib}
 % página 8 da documentação biblatex
 % article: author, title, journaltitle, year/date
@@ -244,6 +168,6 @@ snippet db
     {$6}
 	${0:${VISUAL}}
 }
-<,,<
+{%%}
 \end{document}
 endsnippet

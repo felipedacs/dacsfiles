@@ -37,14 +37,17 @@ call plug#begin(expand('~/.vim/plugged'))
 Plug 'majutsushi/tagbar'
 
 Plug 'tpope/vim-fugitive'        " Comandos git no vim
+Plug 'junegunn/gv.vim'           " Commits in browser
 Plug 'gregsexton/gitv', {'on': ['Gitv']}
 Plug 'airblade/vim-gitgutter'    " Marcações + - _ ~ de git
 Plug 'SirVer/ultisnips'          " engine de snippets
 Plug 'w0rp/ale'                  " Lint geral do vim
-Plug 'dracula/vim'               " colorscheme
+Plug 'dracula/vim', { 'as': 'dracula' }               " colorscheme
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }                  " ferramentas com go
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }   " ctrl p
 Plug 'junegunn/fzf.vim'                                             " ctrl p
+
+Plug 'junegunn/goyo.vim'    " modo limpo
 
 " Sintaxe de linguagens vim
 " deve ser instalado DEPOIS do vim go
@@ -70,8 +73,7 @@ set softtabstop=0
 set shiftwidth=4
 set expandtab
 
-"" Map leader to ,
-let mapleader=','
+let mapleader=' '
 
 "" Searching
 set hlsearch
@@ -106,7 +108,6 @@ set number                  " numero das linhas
 set autoread                " vim checar quando o texto for modificado
 set showmatch               "mostra fechamento de {['']}
 set ai                      "auto indentação -> ==
-"set cursorline              " marcação da linha de onde está o cursor
 set mouse=a                 "libera uso do mouse em todos modos
 
 " Search mappings: These will make it so that going to the next one in a
@@ -117,19 +118,22 @@ nnoremap N Nzzzv
 "*****************************************************************************
 "" Abbreviations
 "*****************************************************************************
-noremap <leader><leader> <ESC>/<,,<<CR>v/<<CR>c<ESC>:noh<CR>a
-inoremap <leader><leader> <ESC>/<,,<<CR>v/<<CR>c<ESC>:noh<CR>a
-inoremap ,< <,,<
+" completar snippet
+noremap ,, <Esc>/{%[^%]*%}<CR>ggnzzc%
+inoremap ,, <Esc>/{%[^%]*%}<CR>ggnzzc%
 
 " fechar automaticamente
-" melhorar o <left><left>......, vimrc não reconhece comando de leader para <,,<
+" melhorar o <left><left>......, vimrc não reconhece comando de leader para {%%}
 " muito cansativo usar a regra de quebrar linha no {} e rever em outros para não fazer
-inoremap ¢ ()<,,<<left><left><left><left><left>
-inoremap ( ()<,,<<left><left><left><left><left>
-inoremap { {}<,,<<left><left><left><left><left>
-inoremap [ []<,,<<left><left><left><left><left>
-inoremap " ""<,,<<left><left><left><left><left>
-inoremap ' ''<,,<<left><left><left><left><left>
+inoremap ¢ (){%%}<left><left><left><left><left>
+inoremap ( (){%%}<left><left><left><left><left>
+inoremap { {}{%%}<left><left><left><left><left>
+inoremap [ []{%%}<left><left><left><left><left>
+inoremap " ""{%%}<left><left><left><left><left>
+inoremap ' ''{%%}<left><left><left><left><left>
+
+inoremap *** <c-K>Sb<space>
+inoremap --- <CR><CR><up><tab><tab><tab><tab><tab><tab><c-K>HH<c-K>HH<c-K>HH<down>
 
 "" no one is really happy until you have this shortcuts
 cnoreabbrev W! w!
@@ -156,6 +160,14 @@ command Dacs execute ":h dacs"
 ":dacs"
 cnoreabbrev dacs Dacs
 "h: local-additions
+
+command Rc execute ":vsp ~/.vimrc"
+cnoreabbrev rc Rc
+
+cnoreabbrev cul set cul
+cnoreabbrev nocul set nocul
+
+noremap <silent> <leader>n :vsp ~/dev/dacsfiles/.vim/vim-notes/<CR>
 
 "*****************************************************************************
 "" Mappings
@@ -213,8 +225,8 @@ nnoremap <leader><space> :noh<cr>
 nnoremap <C-A> i<++><esc>gg=G:%s/<++>/<esc>
 
 " git
-noremap <Leader>gw :!git add %<CR><CR>:echo "git add " . %<CR>
-noremap <Leader>gs :!git status<CR>
+" noremap <Leader>gw :!git add %<CR><CR>:echo "git add " . %<CR>
+" noremap <Leader>gs :!git status<CR>
 
 noremap <Leader>. :pwd<CR>
 "*****************************************************************************
@@ -380,6 +392,16 @@ noremap <leader><tab> :UltiSnipsEdit<cr>/\<snippet\> .*<cr>N:echo "tecle n"<cr>
 "# TagBar
 "######################################################
 map <bs> :Tagbar<cr>
+
+
+"######################################################
+"# Fugitive
+"######################################################
+noremap <Leader>gw :Gw<CR>
+noremap <Leader>gq :Gwq<CR>
+noremap <Leader>gd :Gdiff<CR>
+noremap <Leader>gb :Gblame<CR>
+noremap <Leader>gr :Gread<CR>
 
 "######################################################
 "# Gitgutter
