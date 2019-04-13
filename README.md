@@ -1,3 +1,5 @@
+> THIS WAS MY FIRST TRY OF CREATE A SCRIPT INSTALATION ON UBUNTU
+
 # dacsfiles
 > dotfiles, wallpapers, bootstrap scripts e etc
 * http://df.dacs.run

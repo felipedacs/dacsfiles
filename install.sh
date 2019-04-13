@@ -59,31 +59,6 @@ source $HOME/dev/dacsfiles/$DISTRO/install.sh
 # ---------------------------------------------------------- #
 
 # ------------------------- FUNÇÕES ------------------------ #
-linkandoDotfiles(){
-    git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-    ~/.fzf/install -all
-    ln -v -s -f $(pwd)/dotfiles/.fzf.bash $HOME/.fzf.bash
-
-    ln -v -s -f $(pwd)/dotfiles/.bashrc $HOME/.bashrc
-    ln -v -s -f $(pwd)/dotfiles/.inputrc $HOME/.inputrc
-    ln -v -s -f $(pwd)/dotfiles/.bash_profile $HOME/.bash_profile
-    ln -v -s -f $(pwd)/dotfiles/.bash_prompt $HOME/.bash_prompt
-    ln -v -s -f $(pwd)/dotfiles/.exports $HOME/.exports
-    ln -v -s -f $(pwd)/dotfiles/.functions $HOME/.functions
-    ln -v -s -f $(pwd)/dotfiles/.aliases $HOME/.aliases
-    ln -v -s -f $(pwd)/dotfiles/.scripts $HOME/.scripts
-
-    ln -v -s -f $(pwd)/dotfiles/.gitconfig $HOME/.gitconfig
-
-    ln -v -s -f $(pwd)/dotfiles/.vimrc $HOME/.vimrc
-    ln -v -s -f $(pwd)/.vim/dacs-snippets $HOME/.vim
-
-    # existe a pasta doc?
-    [ -d "$HOME/.vim/doc" ] && rm -r $HOME/.vim/doc
-    informaAcaoCenario "CONFIGURANDO HELP VIM"
-    ln -v -s -f $(pwd)/.vim/doc $HOME/.vim/doc
-}
-
 cenarioBase (){
     informaCenario "BASE"
     if [[ "$TEST_MODE" = false ]]; then
@@ -106,7 +81,6 @@ cenarioBase (){
         instalaTemas
 
         informaAcaoCenario "LINKANDO DOTFILES"
-        linkandoDotfiles
 
         configuraInterfaceGrafica
         instalaDiversosInterfaceGrafica
